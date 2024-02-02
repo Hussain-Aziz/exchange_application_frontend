@@ -22,7 +22,7 @@ export function UserProvider(props: { children: React.ReactNode }) {
         if (!isUserAuthenticated) {
             const loginPaths = ['/login', '/register', '/recover']
             if (!loginPaths.includes(window.location.pathname)) {
-                //router.push('/login')
+                router.push('/login')
             }
         } 
         

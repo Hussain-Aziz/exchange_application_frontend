@@ -44,6 +44,7 @@ export default function PasswordField(
                 type={showPassword ? 'text' : 'password'} 
                 label={passwordText} 
                 variant="filled" 
+                size="small"
                 error={passwordError !== undefined}
                 helperText={passwordError}
                 inputRef={passwordRef} 

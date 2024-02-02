@@ -35,6 +35,7 @@ export default function EmailField(
         <TextField 
             label="Email" 
             variant="filled"
+            size="small"
             inputRef={emailRef}
             onChange={onEmailChanged}
             error={emailError !== undefined}
