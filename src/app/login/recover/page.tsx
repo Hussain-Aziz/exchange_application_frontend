@@ -37,9 +37,9 @@ export default function Login(): React.ReactNode {
 
       <EmailField emailRef={emailRef} checkEmailValidity />
 
-      <Stack spacing={1} className="center-flex">
-        <Button onClick={handleRecoverClick} variant="contained" size="large" sx={ElementWidth}>Recover</Button>
-        <Typography variant="body1">Remembered password? <Link href="/login">Login</Link></Typography>
+      <Stack spacing={1} marginTop={2} className="center-flex">
+        <Button onClick={handleRecoverClick} variant="contained" size="medium" sx={ElementWidth}>Recover</Button>
+        <Typography variant="body2">Remembered password? <Link href="/login">Login</Link></Typography>
       </Stack>
 
       <Grow in={alertInfo !== undefined}>

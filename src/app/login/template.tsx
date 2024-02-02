@@ -14,13 +14,15 @@ export default function LoginLayout(props: {children:React.ReactNode}): React.Re
             <Zoom in={true}>
             <Grid item xs={12} md={6} className="login-background">
                 <div className="horizontal-center-container">
-                    <Stack spacing={4} marginTop={8} className="center-flex">
-                        <Image src='/logo.png' width={150} height={150} alt="logo" className="login-logo-image" />
-                        <Typography variant={"h5"} component="div" style={{ color: "black", fontWeight: "bold", textAlign: 'center' }} paddingInline={1}>
+                    <Stack spacing={4} marginTop={6} className="center-flex">
+                        <Image src='/logo.png' width={100} height={100} alt="logo" className="login-logo-image" />
+                        <Typography variant={"h6"} component="div" style={{ color: "black", fontWeight: "bold", textAlign: 'center' }} paddingInline={1}>
                             AUS EXCHANGE PROGRAM PORTAL
                         </Typography>
-                        <Suspense fallback={<div>Loading...</div>}>
-                            {props.children}
+                        <Suspense fallback={null}>
+                            <Stack spacing={2} className="center-flex">
+                                {props.children}
+                            </Stack>
                         </Suspense>
                     </Stack>
                 </div>

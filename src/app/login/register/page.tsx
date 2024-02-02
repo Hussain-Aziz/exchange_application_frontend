@@ -48,9 +48,9 @@ export default function Login(): React.ReactNode {
 
       <PasswordField passwordRef={password2Ref} passwordText="Confirm Password" />
 
-      <Stack spacing={1} className="center-flex">
-        <Button onClick={handleRegisterClick} variant="contained" size="large" sx={ElementWidth}>Register</Button>
-        <Typography variant="body1">Already have an account? <Link href="/login">Login</Link></Typography>
+      <Stack spacing={1} marginTop={2} className="center-flex">
+        <Button onClick={handleRegisterClick} variant="contained" size="medium" sx={ElementWidth}>Register</Button>
+        <Typography variant="body2">Already have an account? <Link href="/login">Login</Link></Typography>
       </Stack>
 
       <Grow in={alertInfo !== undefined}>

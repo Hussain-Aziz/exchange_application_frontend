@@ -6,4 +6,4 @@ export const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA
 
 export const LoginIconStyles = { color: 'action.active', mr: 1, my: 0.5, position: 'fixed', padding: '0px' }
 export const LoginIconSize = { fontSize: isMobile ? '1.5rem' : '2rem' }
-export const ElementWidth = { width: isMobile ? "80%" : "50%" }
+export const ElementWidth = { width: isMobile ? "80%" : "50%", maxWidth: "450px"}

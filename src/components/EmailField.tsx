@@ -40,7 +40,7 @@ export default function EmailField(
             onChange={onEmailChanged}
             error={emailError !== undefined}
             helperText={emailError}
-            sx={{ width: '100%' }} 
+            sx={{ width: '100%'}} 
         />
         <AccountCircleRoundedIcon sx={{...LoginIconStyles, ...LoginIconSize}} />
     </Box>

@@ -26,7 +26,6 @@ export default function Page(): React.ReactNode {
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    console.log(searchParams)
     if (searchParams.get("registered")) setAlertInfo({ severity: "info", message: "Check your email for a verification link" })
     if (searchParams.get("recovered")) setAlertInfo({ severity: "info", message: "Check your email for a password reset link" })
   }, [searchParams, setAlertInfo])
@@ -51,10 +50,10 @@ export default function Page(): React.ReactNode {
 
       <PasswordField passwordRef={passwordRef} />
 
-      <Stack spacing={1} className="center-flex">
-        <Button onClick={handleLoginClick} variant="contained" size="large" sx={ElementWidth}>Login</Button>
-        <Typography variant="body1"><Link href="/login/recover">Forgot Password?</Link></Typography>
-        <Typography variant="body1">{"Don't have an account?"} <Link href="/login/register">Sign Up</Link></Typography>
+      <Stack spacing={1} marginTop={2} className="center-flex">
+        <Button onClick={handleLoginClick} variant="contained" sx={ElementWidth}>Login</Button>
+        <Typography variant="body2"><Link href="/login/recover">Forgot Password?</Link></Typography>
+        <Typography variant="body2">{"Don't have an account?"} <Link href="/login/register">Sign Up</Link></Typography>
       </Stack>
 
       <Grow in={alertInfo !== undefined}>
