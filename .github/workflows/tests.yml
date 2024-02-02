@@ -1,0 +1,29 @@
+# https://github.com/nystudio107/rollup-plugin-critical/blob/master/.github/workflows/node.js.yml
+name: Backend Tests
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.x
+      - name: Run Tests
+        run: |
+          npm install
+          LINES="$(npm run coverage | grep 'All files' | awk -F' ' '{print $(NF-1)}')"
+          echo "COVERAGE=$(echo ${LINES})" >> $GITHUB_ENV
+      - name: Create the Badge
+        uses: schneegans/dynamic-badges-action@v1.0.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: ee13ac4a5e7a22f597804cfe438b1891
+          filename: FrontendTestBadge.json
+          label: Frontend Test Coverage
+          message: ${{ env.COVERAGE }}
+          color: green
+          namedLogo: vitest
