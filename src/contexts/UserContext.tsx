@@ -20,7 +20,7 @@ export function UserProvider(props: { children: React.ReactNode }) {
 
     useEffect(() => {
         if (!isUserAuthenticated) {
-            const loginPaths = ['/login', '/register', '/recover']
+            const loginPaths = ['/', '/login', '/register', '/recover']
             if (!loginPaths.includes(window.location.pathname)) {
                 router.push('/login')
             }
