@@ -1,6 +1,6 @@
 # Exchange Application Frontend
 
-![frontend tests](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Hussain-Aziz/ee13ac4a5e7a22f597804cfe438b1891/raw/e731766dc5545e14322bd6ac9f66a72a933b6ee3/FrontendTestBadge.json)
+![frontend tests](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Hussain-Aziz/ee13ac4a5e7a22f597804cfe438b1891/raw/FrontendTestBadge.json)
 
 ## Building Steps
 

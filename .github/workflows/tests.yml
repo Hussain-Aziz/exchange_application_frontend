@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: ee13ac4a5e7a22f597804cfe438b1891
           filename: FrontendTestBadge.json
-          label: Frontend Test Coverage
-          message: ${{ env.COVERAGE }}
+          label: Test Coverage
+          message: ${{ env.COVERAGE }}%
           color: green
           namedLogo: vitest
