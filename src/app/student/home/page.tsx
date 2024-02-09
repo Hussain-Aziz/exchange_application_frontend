@@ -20,7 +20,7 @@ export default function Page() {
   return (
     <>
       {applicationState === "NOT_STARTED" && 
-      <HomePageButton onClick={'/student/start'} label='Start Application' />
+      <HomePageButton onClick={'/student/start_application'} label='Start Application' />
       }
 
       {(applicationState === "ADDING_COURSES" || applicationState === "APPROVED") && 

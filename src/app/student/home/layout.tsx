@@ -10,7 +10,7 @@ export default function Layout(props: { children: React.ReactNode }): React.Reac
     <Grow in={true}>
       <Grid container className="full-screen">
         <Grid item xs={10} md={5}>
-          <Stack spacing={4}>
+          <Stack spacing={4} sx={{overflowY: 'auto'}}>
             {props.children}
           </Stack>
         </Grid>

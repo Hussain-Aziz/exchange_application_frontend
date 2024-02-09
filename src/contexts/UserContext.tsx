@@ -19,7 +19,7 @@ export function UserProvider(props: { children: React.ReactNode }) {
     const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        if (!isUserAuthenticated) {
+        if (!isUserAuthenticated && process.env.NODE_ENV !== 'development') {
             const loginPaths = ['/', '/login', '/register', '/recover']
             if (!loginPaths.includes(window.location.pathname)) {
                 router.push('/login')
