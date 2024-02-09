@@ -40,7 +40,7 @@ export default function Page(): React.ReactNode {
       setAlertInfo({ severity: "error", message: "Invalid email address" })
     } else {
       userContext.setIsUserAuthenticated(true)
-      router.push('/home')
+      router.push('/student/home')
     }
   }
 
@@ -51,7 +51,7 @@ export default function Page(): React.ReactNode {
       <PasswordField passwordRef={passwordRef} />
 
       <Stack spacing={1} marginTop={2} className="center-flex">
-        <Button onClick={handleLoginClick} variant="contained" sx={ElementWidth}>Login</Button>
+        <Button onClick={handleLoginClick} variant="contained"  sx={ElementWidth}>Login</Button>
         <Typography variant="body2"><Link href="/login/recover">Forgot Password?</Link></Typography>
         <Typography variant="body2">{"Don't have an account?"} <Link href="/login/register">Sign Up</Link></Typography>
       </Stack>

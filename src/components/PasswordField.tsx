@@ -51,7 +51,7 @@ export default function PasswordField(
                 onChange={onPasswordChanged} 
                 sx={{ width: '100%' }} 
             />
-            <IconButton onClick={handleClickShowPassword} sx={LoginIconStyles} onMouseDown={(e) => e.preventDefault()}>
+            <IconButton onClick={handleClickShowPassword} sx={LoginIconStyles} tabIndex={-1} onMouseDown={(e) => e.preventDefault()}>
                 {showPassword ? <VisibilityOffIcon sx={{ margin: '0', ...LoginIconSize }} /> : <VisibilityIcon sx={{ margin: '0', ...LoginIconSize }} />}
             </IconButton>
         </Box>

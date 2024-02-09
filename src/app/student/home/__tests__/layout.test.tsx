@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest'
-import Home from '../page';
+import Layout from '../layout';
 
-describe('Home', () => {
+describe('Layout', () => {
   it('renders without crashing', () => {
-    const { container } = render(<Home />);
+    const { container } = render(<Layout><></></Layout>);
     expect(container).toBeTruthy();
   });
 });
