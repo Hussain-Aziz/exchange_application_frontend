@@ -25,4 +25,9 @@ describe('Home Page Button', () => {
         const { container } = render(<HomePageButton label="Test" onClick={() => {const x = "hi"}} />);
         expect(container).toBeTruthy();
     });
+
+    it('renders with a logout', () => {
+        const { container } = render(<HomePageButton label="Test" logout />);
+        expect(container).toBeTruthy();
+    });
 });

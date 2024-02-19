@@ -1,30 +1,25 @@
 'use client'
-import React, { useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import HomePageButton from '../../../components/HomePageButton'
-import { UserContext } from '../../../contexts/UserContext';
-import { useRouter } from 'next/navigation';
-
-type ApplicationState = "NOT_STARTED" | "WAITING_INITIAL_APPROVAL" | "ADDING_COURSES" | "WAITING_SIGNATURES" | "APPROVED"
-
-function getApplicationState(): ApplicationState {
-  return "NOT_STARTED"
-}
 
 export default function Page() {
-  const userContext = useContext(UserContext)
-  const router = useRouter()
 
-  let applicationState: ApplicationState = getApplicationState()
+  const [applicationState, setApplicationState] = useState<ApplicationState>(undefined)
 
-  const handleLogout = () => { userContext.setIsUserAuthenticated(false); router.push('/login') }
+  useEffect(() => {
+    setApplicationState(JSON.parse(localStorage.getItem("applicationState") || JSON.stringify('NOT_STARTED')))
+  }, [])
+
+  console.log(applicationState)
+
   return (
     <>
-      {applicationState === "NOT_STARTED" && 
+      {applicationState === undefined || applicationState === "NOT_STARTED" && 
       <HomePageButton onClick={'/student/start_application'} label='Start Application' />
       }
 
       {(applicationState === "ADDING_COURSES" || applicationState === "APPROVED") && 
-      <HomePageButton onClick={'/student/courses'} label='Add Courses' />
+      <HomePageButton onClick={'/student/add_courses'} label='Add Courses' />
       }
 
       {(applicationState === "WAITING_INITIAL_APPROVAL" || applicationState === "WAITING_SIGNATURES") &&
@@ -35,7 +30,9 @@ export default function Page() {
       <HomePageButton onClick={'/student/cancel'} label='Withdraw Application'/>
       }
 
-      <HomePageButton onClick={handleLogout} label='Logout'/>
+      <HomePageButton logout label='Logout'/>
     </>
   )
 }
+
+export type ApplicationState = "NOT_STARTED" | "WAITING_INITIAL_APPROVAL" | "ADDING_COURSES" | "WAITING_SIGNATURES" | "APPROVED" | undefined

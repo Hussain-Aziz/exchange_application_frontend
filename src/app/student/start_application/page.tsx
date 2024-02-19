@@ -24,7 +24,7 @@ export default function Page() {
       .required('Current Standing is required'),
     mobileNumber: Yup.string()
       .required('Mobile Number is required')
-      .matches(/^\+9715\d{7}$/, 'Must be in the format +9715xxxxxxxx'),
+      .matches(/^\+9715\d{8}$/, 'Must be in the format +9715xxxxxxxx'),
     expectedGraduation: Yup.string()
       .matches(
         /^(Fall|fall|Spring|spring|Summer|summer) (20[2-9][0-9]|2100)$/,
@@ -53,8 +53,11 @@ export default function Page() {
               expectedGraduation: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
+            onSubmit={values => {
               console.log(values);
+              // TODO: Send the form data to the server
+              localStorage.setItem('applicationState', JSON.stringify('ADDING_COURSES'));
+              router.push('/student/home/')
             }}
           >
             {({ errors, touched }) => (

@@ -17,7 +17,7 @@ export default function Home(): React.ReactElement {
           Welcome to AUS Exchange Program Portal
         </Typography>
         <Typography variant="body1" gutterBottom>
-          This is some sample text. You can replace this with any information you want to display on the welcome page.
+          Welcome to the AUS Exchange Program Portal.
         </Typography>
       </Container>
     </div>

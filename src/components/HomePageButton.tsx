@@ -1,17 +1,27 @@
-import React from "react";
+'use client';
+import React, {useContext} from "react";
+import { UserContext } from "../contexts/UserContext";
 import { Button, styled } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function HomePageButton(
-  { label, onClick }: { label: string, onClick: string | (() => void) }
+  { label, onClick, logout }: { label: string, onClick?: string | (() => void), logout?: boolean}
 ): React.ReactElement {
   const router = useRouter()
+  const userContext = useContext(UserContext)
 
   const handleClick = () => {
     if (typeof onClick === 'string') {
       router.push(onClick)
     } else {
-      onClick()
+      if (logout) {
+        userContext.setIsUserAuthenticated(false); 
+        localStorage.clear();
+        router.push('/login')
+      }
+      else if (onClick) {
+        onClick()
+      }
     }
   }
 
