@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { describe, expect, vi, it } from 'vitest'
 import HomePageButton from '../HomePageButton'
+import { UserProvider } from "../../contexts/UserContext";
 
 vi.mock('next/navigation', () => ({
     useRouter: () => ({
@@ -17,17 +18,23 @@ vi.mock('next/navigation', () => ({
 
 describe('Home Page Button', () => {
     it('renders with a link', () => {
-        const { container } = render(<HomePageButton label="Test" onClick="test" />);
+        const { container } = render(<UserProvider><HomePageButton label="Test" onClick="test" /></UserProvider>);
         expect(container).toBeTruthy();
+        const button = screen.getAllByRole('button')[0]
+        fireEvent.click(button);
     });
 
     it('renders with a fucntion', () => {
-        const { container } = render(<HomePageButton label="Test" onClick={() => {const x = "hi"}} />);
+        const { container } = render(<UserProvider><HomePageButton label="Test" onClick={() => {const x = "hi"}} /></UserProvider>);
         expect(container).toBeTruthy();
+        const button = screen.getAllByRole('button')[0]
+        fireEvent.click(button);
     });
 
     it('renders with a logout', () => {
-        const { container } = render(<HomePageButton label="Test" logout />);
+        const { container } = render(<UserProvider><HomePageButton label="Test" logout /></UserProvider>);
         expect(container).toBeTruthy();
+        const button = screen.getAllByRole('button')[0]
+        fireEvent.click(button);
     });
 });
