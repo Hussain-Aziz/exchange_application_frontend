@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import HomePageButton from '../../../components/HomePageButton'
 import ConfirmDialog from '../../../components/ConfirmDialog';
 
-export default function Page({mockApplicationState}: {mockApplicationState?: ApplicationState} = {}) {
+export default function Page() {
 
-  const [applicationState, setApplicationState] = useState<ApplicationState>(mockApplicationState || undefined)
+  const [applicationState, setApplicationState] = useState<ApplicationState>(undefined)
   const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
   const [submitCoursesDialogOpen, setSubmitCoursesDialogOpen] = React.useState(false);
 
