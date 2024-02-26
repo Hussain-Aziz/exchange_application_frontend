@@ -3,7 +3,7 @@ import HomePageHeaderLayout from "../../components/HomePageHeaderLayout";
 
 export default function Layout(props: { children: React.ReactNode }): React.ReactNode {
   return (
-    <HomePageHeaderLayout portalHeader="Student Portal">
+    <HomePageHeaderLayout portalHeader="Teaching Faculty Portal">
       {props.children}
     </HomePageHeaderLayout>
   )

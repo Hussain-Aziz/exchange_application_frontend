@@ -18,7 +18,7 @@ vi.mock('next/navigation', () => ({
 
 describe('Home Page Button', () => {
     it('renders with a link', () => {
-        const { container } = render(<UserProvider><HomePageButton label="Test" onClick="test" /></UserProvider>);
+        const { container } = render(<UserProvider><HomePageButton label="Test" onClick="test" numIndicators={2} /></UserProvider>);
         expect(container).toBeTruthy();
         const button = screen.getAllByRole('button')[0]
         fireEvent.click(button);

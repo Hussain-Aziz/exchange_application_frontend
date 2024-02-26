@@ -1,11 +1,11 @@
 'use client';
 import React, {useContext} from "react";
 import { UserContext } from "../contexts/UserContext";
-import { Button, styled } from "@mui/material";
+import { Badge, Button, styled } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function HomePageButton(
-  { label, onClick, logout }: { label: string, onClick?: string | (() => void), logout?: boolean}
+  { label, onClick, logout, numIndicators, marginTop }: { label: string, onClick?: string | (() => void), logout?: boolean, numIndicators?: number, marginTop?: string}
 ): React.ReactElement {
   const router = useRouter()
   const userContext = useContext(UserContext)
@@ -34,6 +34,8 @@ export default function HomePageButton(
   });
 
   return (
-    <CustomButton onClick={handleClick} variant="contained" size="large">{label}</CustomButton>
+    <Badge color="info" invisible={numIndicators === undefined}  badgeContent={numIndicators} sx={{ width: '90%', marginTop: marginTop }}>
+      <CustomButton sx={{ width: '100%' }} onClick={handleClick} variant="contained" size="large">{label}</CustomButton>
+  </Badge>
   )
 }
