@@ -3,48 +3,65 @@ import React, { useState, useRef } from 'react';
 import ViewPdf from '../../../../components/ViewPdf';
 import {
   Box,
-  Button,
+  Link,
   Grid,
   Typography,
+  Button,
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { UploadButton } from '../../../../components/fileUpload';
 
 export default function Page({ params }: { params: { course_id: string } }) {
   const router = useRouter();
-  const [fileName, setFileName] = useState<string>('');
+  const [fileInfo, setFileInfo] = useState<{fileName: string, fileLink: string}>({fileName: '', fileLink: ''});
   const [error, setError] = useState<string>('');
-  const fileRef = useRef<File>();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.currentTarget.files && event.currentTarget.files.length) {
-      setFileName(event.currentTarget.files[0].name);
-      fileRef.current = event.currentTarget.files[0];
-      if (event.currentTarget.files[0].size > 2 * 1024 * 1024) {
-        setError('File size should be less than 2MB');
-      } else {
-        setError('');
-      }
+  const submit = () => {
+    if (fileInfo.fileLink === '') {
+      setError('Please upload a file');
+      return;
     }
-  };
+
+    // TODO: send fileLink to backend
+
+    router.push('/teaching_faculty/home/');
+  }
 
   return (
     <Grid container className="full-screen" sx={{ overflowY: 'auto' }}>
-      <Grid item xs={10}>
+      <Grid item xs={10} sx={{display: 'flex', flexDirection: 'column'}}>
         <Typography variant="h5" sx={{ marginBottom: '20px' }}>Syllabus Upload</Typography>
         <Box sx={{ marginBottom: '20px' }}>
-          <Button variant="contained" component="label">
-            Upload Equivalent AUS Syllabus
-            <input
-              type="file"
-              hidden
-              onChange={handleFileChange}
-              accept=".pdf"
-            />
-          </Button>
-          {fileName && (
-            <Typography variant="subtitle1">
-              {fileName}
-            </Typography>
+          <UploadButton
+            endpoint="pdfUploader"
+            appearance={{
+              button({ ready, isUploading }) {
+                return {
+                  backgroundColor: '#354545'
+                }
+              },
+              container({ ready, isUploading }) {
+                return {
+                  display:'block',
+                  marginLeft: '5px',
+                }
+              }
+            }}
+            onClientUploadComplete={(res) => {
+              setFileInfo({fileName: res[0].name, fileLink: res[0].url});
+              setError('');
+            }}
+            onUploadError={(error: Error) => {
+              setError(error.message);
+              setFileInfo({fileName: '', fileLink: ''});
+            }}
+          />
+          {fileInfo.fileLink !== '' && (
+            <Link href={fileInfo.fileLink} target="_blank" rel="noopener noreferrer">
+              <Typography variant="subtitle1">
+                {fileInfo.fileName}
+              </Typography>
+            </Link>
           )}
           {(error !== '') ? (
             <Typography color="error">
@@ -54,6 +71,7 @@ export default function Page({ params }: { params: { course_id: string } }) {
         </Box>
         <Typography variant="h6" sx={{ marginBottom: '20px' }}>Host University Syllabus</Typography>
         <ViewPdf link='/COE424.pdf' height={'300px'} />
+        <Button sx={{ alignSelf: 'end', position: 'sticky', bottom: 25 }} variant="contained" onClick={submit}>Submit</Button>
       </Grid>
     </Grid>
   );

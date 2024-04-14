@@ -1,0 +1,9 @@
+.upload-text-margin{
+    margin-top: 8px !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .upload-text-margin{
+        margin-top: 0px !important;
+    }
+}

@@ -5,6 +5,7 @@ import {UserProvider} from "../contexts/UserContext";
 import CustomThemeProvider from "../contexts/CustomThemeProvider";
 
 import "./globals.css";
+import "@uploadthing/react/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

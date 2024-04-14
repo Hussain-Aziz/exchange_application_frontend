@@ -15,8 +15,6 @@ import FileInput from './FileInput';
 export default function AddCourseForm({ AusCourses, AusSubjects }: { AusCourses: { code: string, name: string }[], AusSubjects: string[] }) {
   const router = useRouter();
 
-  const fileRef = useRef<File>(null as any);
-
   const validationSchema = Yup.object().shape({
     hostCourseCode: Yup.string()
       .required('Course Code at Host University is required'),
@@ -35,16 +33,9 @@ export default function AddCourseForm({ AusCourses, AusSubjects }: { AusCourses:
         return AusCourses.some((course) => course.code === value);
       })
       .required('Equivalent Course at AUS is required'),
-    hostUniversitySyllabus: Yup.mixed()
+    hostUniversitySyllabus: Yup.string()
       .required("A host university syllabus is required")
-      .test("is-file-too-big", "File exceeds 2MB", () => {
-        const file = fileRef?.current;
-        if (file) {
-          console.log(file.size);
-          return file.size <= 2 * 1024 * 1024;
-        }
-        return true;
-      })
+      .matches(/^(http|https):\/\/[^ "]+$/,"Must be a valid URL")
   });
 
   return (
@@ -72,7 +63,7 @@ export default function AddCourseForm({ AusCourses, AusSubjects }: { AusCourses:
               <Field variant="filled" size="small" as={TextField} name="hostCouseTitle" label="Course Title at Host University" error={touched.hostCouseTitle && !!errors.hostCouseTitle} helperText={touched.hostCouseTitle && errors.hostCouseTitle} style={{ marginBottom: '20px' }} />
               <Field variant="filled" size="small" as={TextField} name="courseCredits" label="Course Credits" error={touched.courseCredits && !!errors.courseCredits} helperText={touched.courseCredits && errors.courseCredits} style={{ marginBottom: '20px' }} />
               <CourseInput AusCourses={AusCourses} AusSubjects={AusSubjects} errors={errors} touched={touched} />
-              <FileInput fileRef={fileRef} name="hostUniversitySyllabus" errors={errors} touched={touched} />
+              <FileInput name="hostUniversitySyllabus" errors={errors} touched={touched} />
               <Button sx={{ alignSelf: 'end', position: 'sticky', bottom: 25 }} variant="contained" type="submit">Submit</Button>
             </Form>
           )}
