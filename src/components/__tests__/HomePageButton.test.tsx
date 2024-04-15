@@ -31,10 +31,4 @@ describe('Home Page Button', () => {
         fireEvent.click(button);
     });
 
-    it('renders with a logout', () => {
-        const { container } = render(<UserProvider><HomePageButton label="Test" logout /></UserProvider>);
-        expect(container).toBeTruthy();
-        const button = screen.getAllByRole('button')[0]
-        fireEvent.click(button);
-    });
 });

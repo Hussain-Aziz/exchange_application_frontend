@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import CourseInput from './CourseInput';
 import FileInput from './FileInput';
 
-export default function AddCourseForm({ AusCourses, AusSubjects }: { AusCourses: { code: string, name: string }[], AusSubjects: string[] }) {
+export default function AddCourseForm({ AusCourses, AusSubjects, submitToBackend }: { AusCourses: { code: string, name: string }[], AusSubjects: string[], submitToBackend: (data: any) => Promise<void>}) {
   const router = useRouter();
 
   const validationSchema = Yup.object().shape({
@@ -48,12 +48,12 @@ export default function AddCourseForm({ AusCourses, AusSubjects }: { AusCourses:
             hostCouseTitle: '',
             courseCredits: 0,
             ausCourse: '',
-            hostUniversitySyllabus: null,
+            hostUniversitySyllabus: '',
           }}
           validationSchema={validationSchema}
-          onSubmit={values => {
+          onSubmit={async (values) => {
             console.log(values);
-            // TODO: Send the form data to the server
+            await submitToBackend(values);
             router.push('/student/home/');
           }}
         >

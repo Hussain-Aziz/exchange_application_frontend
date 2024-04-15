@@ -1,47 +1,31 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import HomePageButton from '../../../components/HomePageButton'
-import ConfirmDialog from '../../../components/ConfirmDialog';
+import { cookies } from 'next/headers'
+import StudentHomeContent from './content';
+import { applicationInfoEndpoint } from '../../../constants/endpoints';
 
-export default function Page() {
+export default async function Page() {
 
-  const [applicationState, setApplicationState] = useState<ApplicationState>(undefined)
-  const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
-  const [submitCoursesDialogOpen, setSubmitCoursesDialogOpen] = React.useState(false);
+  const logout = async () => {
+    "use server"
+    cookies().delete('token')
+    cookies().delete('user')
+  }
 
-  useEffect(() => {
-    setApplicationState(JSON.parse(localStorage.getItem("applicationState") || JSON.stringify('NOT_STARTED')))
-  }, [])
+  const applicationDataRequest = await fetch(applicationInfoEndpoint, {
+    method: 'GET',
+    headers: {
+      "Authorization": "TOKEN " + cookies().get('token').value
+    }
+  })
 
-  console.log(applicationState)
+  const applicationData = await applicationDataRequest.json()
 
-  return (
-    <>
-      {applicationState === undefined || applicationState === "NOT_STARTED" && 
-      <HomePageButton onClick={'/student/start_application'} label='Start Application' />
-      }
+  let applicationState: ApplicationState = undefined
+  if (applicationData.aus_id === null) applicationState = "NOT_STARTED"
+  else applicationState = "ADDING_COURSES"
 
-      {(applicationState === "ADDING_COURSES" || applicationState === "APPROVED") && 
-      <>
-      <HomePageButton onClick={'/student/add_courses'} label='Add Courses' />
-      <HomePageButton onClick={() => setSubmitCoursesDialogOpen(true)} label='Submit Courses' />
-      </>
-      }
+  return <StudentHomeContent applicationState={applicationState} logout={logout} />
 
-      {(applicationState === "WAITING_INITIAL_APPROVAL" || applicationState === "WAITING_SIGNATURES") &&
-      <HomePageButton onClick={'/student/status'} label='Check Application Status'/>
-      }
 
-      {applicationState !== "NOT_STARTED" &&
-        <HomePageButton onClick={() => setCancelDialogOpen(true)} label='Withdraw Application'/>
-      }
-      <HomePageButton logout label='Logout'/>
-      <div>
-        <ConfirmDialog action='submit courses' open={submitCoursesDialogOpen} setOpen={setSubmitCoursesDialogOpen} onConfirm={() => setApplicationState('WAITING_SIGNATURES')} />
-        <ConfirmDialog action='cancel' open={cancelDialogOpen} setOpen={setCancelDialogOpen} />
-      </div>
-    </>
-  )
 }
 
 export type ApplicationState = "NOT_STARTED" | "WAITING_INITIAL_APPROVAL" | "ADDING_COURSES" | "WAITING_SIGNATURES" | "APPROVED" | undefined
