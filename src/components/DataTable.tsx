@@ -23,17 +23,17 @@ import useTableControls from '../hooks/useTableControls';
  */
 export default function DataTable({
   columns,
-  endpoint,
+  fetchData,
   UserDataTableRow
 }:
 {
   columns: string[],
-  endpoint: string,
+  fetchData: (pageNum: number, searchText: string) => Promise<any>
   UserDataTableRow: any,
 }
 ) {
 
-  const [tableState, setTableState, fetchedData, maxPages, numDigits, rows] = useTableControls(endpoint)
+  const [tableState, setTableState, fetchedData, maxPages, numDigits, rows] = useTableControls(fetchData)
 
   // creates prestyled Material UI component
   const StyledTableCell = useMemo(() => styled(TableCell)(createStyledTableCell()), []);

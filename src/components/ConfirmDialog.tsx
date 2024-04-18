@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 
 export default function ConfirmDialog({action, open, setOpen, onConfirm}: {action: string, open: boolean, setOpen: (open: boolean) => void, onConfirm?: () => void}): JSX.Element {
   const handleClose = (answer: string) => {
-    console.log(answer);
     setOpen(false);
     if (answer === 'yes' && onConfirm !== undefined) {
       onConfirm();

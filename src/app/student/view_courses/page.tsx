@@ -1,15 +1,13 @@
 import React from "react";
 import { Grid, Typography, Link } from '@mui/material';
-import { listCoursesEndpoint } from "../../../constants/endpoints";
+import { getHeaders, listCoursesEndpoint } from "../../../constants/endpoints";
 import { cookies } from 'next/headers';
 
 export default async function Page() {
 
   const coursesResponse = await fetch(listCoursesEndpoint, {
     method: 'GET',
-    headers: {
-      "Authorization": "TOKEN " + cookies().get('token').value
-    }
+    headers: getHeaders(cookies())
   })
 
   const courses = await coursesResponse.json()
@@ -19,7 +17,14 @@ export default async function Page() {
       <Grid item xs={10}>
         <Typography variant="h5" sx={{ marginBottom: '20px' }}>Submitted Courses</Typography>
         <Grid container spacing={2}>
-          {courses.map((course: any) => (
+          {courses.map((course: any) => {
+            let status = "Pending"
+            if (course.approved_status === true) {
+              status = "Approved"
+            } else if (course.approved_status === false) {
+              status = "Rejected"
+            }
+            return (
             <Grid container key={course.course_application_id} item direction="row" spacing={2}>
               <Grid item>
                 <Typography variant="body1">{course.code}</Typography>
@@ -41,8 +46,11 @@ export default async function Page() {
                   <Typography variant="body1">Syllabus</Typography>
                 </Link>
               </Grid>
+              <Grid item>
+                <Typography variant="body1">{status}</Typography>
+              </Grid>
             </Grid>
-          ))}
+          )})}
         </Grid>
       </Grid>
     </Grid>

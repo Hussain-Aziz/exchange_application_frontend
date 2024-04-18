@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest'
-import Page from '../page';
+import StartApplicationContent from '../content';
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -17,7 +17,7 @@ vi.mock('next/navigation', () => ({
 
 describe('Page', () => {
   it('renders without crashing', () => {
-    const { container } = render(<Page />);
+    const { container } = render(<StartApplicationContent submitToBackend={async (data) => {}} />);
     expect(container).toBeTruthy();
   });
 });

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import fetchUserData from "../constants/fetchUserData";
 
 /**
  * Custom hook for managing table pagination and search
 */
-export default function useTableControls(endpoint: string) {
+export default function useTableControls(fetchData: (pageNum: number, searchText: string) => Promise<any>) {
     const [tableState, setTableState] = useState({
         searchText: "",
         pageNum: 1,
@@ -23,12 +22,12 @@ export default function useTableControls(endpoint: string) {
       useEffect(() => {
         const fetchNewData = async () => {
           setFetchedData(null);
-          const data = await fetchUserData(tableState.pageNum, tableState.searchText, endpoint);
+          const data = await fetchData(tableState.pageNum, tableState.searchText);
           setFetchedData(data);
         }
     
         fetchNewData()
-      }, [endpoint, tableState]);
+      }, [fetchData, tableState]);
 
 
       return [tableState, setTableState, fetchedData, maxPages, numDigits, rows]

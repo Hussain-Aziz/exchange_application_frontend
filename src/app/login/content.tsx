@@ -39,7 +39,6 @@ export default function LoginContent({login}:{login: (username: string, password
       setAlertInfo({ severity: "error", message: "Invalid email address" })
     } else {
       const nextPage = await login(username, password)
-      console.log(nextPage)
 
       if (nextPage.startsWith('/'))
         router.push(nextPage)

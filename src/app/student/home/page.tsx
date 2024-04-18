@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import StudentHomeContent from './content';
-import { applicationInfoEndpoint } from '../../../constants/endpoints';
+import { applicationInfoEndpoint, getHeaders } from '../../../constants/endpoints';
 
 export default async function Page() {
 
@@ -12,9 +12,7 @@ export default async function Page() {
 
   const applicationDataRequest = await fetch(applicationInfoEndpoint, {
     method: 'GET',
-    headers: {
-      "Authorization": "TOKEN " + cookies().get('token').value
-    }
+    headers: getHeaders(cookies())
   })
 
   const applicationData = await applicationDataRequest.json()

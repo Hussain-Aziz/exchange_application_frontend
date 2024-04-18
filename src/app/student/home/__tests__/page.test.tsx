@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest'
-import Page from '../page';
+import StudentHomeContent from '../content';
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -17,11 +17,7 @@ vi.mock('next/navigation', () => ({
 
 describe('Page', () => {
   it('renders without crashing', () => {
-    const { container } = render(<Page />);
-    expect(container).toBeTruthy();
-  });
-  it('renders without crashing with mockApplicationState', () => {
-    const { container } = render(<Page />);
+    const { container } = render(<StudentHomeContent applicationState='ADDING_COURSES' logout={() => {}}/>);
     expect(container).toBeTruthy();
   });
 });

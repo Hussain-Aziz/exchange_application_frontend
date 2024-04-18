@@ -52,7 +52,6 @@ export default function AddCourseForm({ AusCourses, AusSubjects, submitToBackend
           }}
           validationSchema={validationSchema}
           onSubmit={async (values) => {
-            console.log(values);
             await submitToBackend(values);
             router.push('/student/home/');
           }}

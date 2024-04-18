@@ -1,6 +1,6 @@
 import AddCourseForm from './AddCourseForm';
 import { getAUSCoursesList } from './CoursesList'
-import { listCoursesEndpoint } from '../../../constants/endpoints';
+import { listCoursesEndpoint, getHeaders } from '../../../constants/endpoints';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 
@@ -14,19 +14,10 @@ export default async function Page() {
     "use server"
     const response = await fetch(listCoursesEndpoint, {
       method: 'POST',
-      headers: {
-        "Authorization": "TOKEN " + cookies().get('token').value
-      },
+      headers: getHeaders(cookies()),
       body: JSON.stringify(data)
     })
-
-    const body = await response.json()
-    //take first 200 characters of body
-
-    console.log(data, body)
-    
     revalidatePath('/student/view_courses')
-    
   }
 
   return (

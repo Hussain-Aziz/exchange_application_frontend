@@ -1,10 +1,9 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import HomePageButton from '../../../components/HomePageButton'
 import ConfirmDialog from '../../../components/ConfirmDialog';
 import { ApplicationState } from './page';
 import { useRouter } from 'next/navigation';
-import Home from '@/app/page';
 
 export default function StudentHomeContent({ applicationState, logout }: { applicationState: ApplicationState, logout: () => void }) {
   const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
