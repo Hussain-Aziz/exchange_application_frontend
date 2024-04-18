@@ -28,8 +28,8 @@ export default function Page() {
       const token = data.token
       const expiry = data.expiry
       const user = data.user
-      cookies().set('token', token, { expires: new Date(expiry), secure: true, sameSite: 'strict' })
-      cookies().set('user', JSON.stringify(user), { expires: new Date(expiry), secure: true, sameSite: 'strict' })
+      cookies().set('token', token, { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
+      cookies().set('user', JSON.stringify(user), { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
 
       return user.is_faculty ? '/teaching_faculty/home/' : '/student/home/'
     }
