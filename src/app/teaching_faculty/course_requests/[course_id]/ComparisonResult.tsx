@@ -31,7 +31,7 @@ export default function ComparisonResult({id, comparison_result, running_compari
       );
     }
 
-  const match = Number(real_comparison_result['match percentage'].replace('%', ''));
+  const match = Number(String(real_comparison_result['match percentage']).replace('%', ''));
   const color = match > 80 ? 'green' : 
                 match > 60 ? undefined : // default color
                             'red';

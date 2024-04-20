@@ -1,6 +1,6 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 
-export const baseEndpoint = "http://127.0.0.1:8000/"
+export const baseEndpoint = "http://ec2-16-171-225-90.eu-north-1.compute.amazonaws.com:8000/"
 export const loginEndpoint = baseEndpoint + 'login/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
 export const startApplicationEndpoint = baseEndpoint + 'student/start_application/'
