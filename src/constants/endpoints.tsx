@@ -1,6 +1,7 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
+import { createDecipheriv } from "crypto"
 
-export const baseEndpoint = "http://ec2-16-171-225-90.eu-north-1.compute.amazonaws.com:8000/"
+export const baseEndpoint = "https://ec2-16-171-225-90.eu-north-1.compute.amazonaws.com/"
 export const loginEndpoint = baseEndpoint + 'login/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
 export const startApplicationEndpoint = baseEndpoint + 'student/start_application/'
@@ -17,9 +18,22 @@ export function getHeaders(cookies: ReadonlyRequestCookies) {
 
   if (token === undefined) {
     window.location.replace('/login')
-  } 
-  return {
-    "Authorization": "TOKEN " + token,
-    "Content-Type": "application/json"
-  } as const
+    return {
+      "Authorization": "TOKEN ",
+      "Content-Type": "application/json"
+    } as const
+  }
+  else {
+    const algorithm = process.env.ENCRYPT_ALG || ''
+    const secret_key = process.env.ENCRYPT_KEY || ''
+    const IV = process.env.ENCRYPT_IV || ''
+
+    const decipher = createDecipheriv(algorithm, secret_key, Buffer.from(IV))
+    const real_token = decipher.update(token, 'hex', 'utf8') + decipher.final('utf8')
+
+    return {
+      "Authorization": "TOKEN " + real_token,
+      "Content-Type": "application/json"
+    } as const
+  }
 }

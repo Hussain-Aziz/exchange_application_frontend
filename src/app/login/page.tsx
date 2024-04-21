@@ -1,6 +1,7 @@
 import LoginContent from './content';
 import { cookies } from "next/headers";
 import { loginEndpoint } from "../../constants/endpoints";
+import { createCipheriv } from "crypto"
 
 type LoginSuccess = {
   expiry: string,
@@ -28,7 +29,16 @@ export default function Page() {
       const token = data.token
       const expiry = data.expiry
       const user = data.user
-      cookies().set('token', token, { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
+
+      const algorithm = process.env.ENCRYPT_ALG || ''
+      const secret_key = process.env.ENCRYPT_KEY || ''
+      const IV = process.env.ENCRYPT_IV || ''
+
+      const cipher = createCipheriv(algorithm, secret_key, Buffer.from(IV))
+
+      const new_token = cipher.update(token, 'utf8', 'hex') + cipher.final('hex')
+
+      cookies().set('token', new_token, { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
       cookies().set('user', JSON.stringify(user), { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
 
       return user.is_faculty ? '/teaching_faculty/home/' : '/student/home/'
