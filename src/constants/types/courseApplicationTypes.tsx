@@ -15,6 +15,8 @@ export interface CourseApplication {
   comparison_result: any
   running_comparison: boolean
   university: number
+  delegated_to : Faculty | null
+  delegated_approval: boolean
 }
 
 export interface Student {
@@ -30,4 +32,15 @@ export interface Student {
   host_contact_email: string
   user: number
   university: number
+}
+
+export interface Faculty {
+  id: number
+  user: UserType
+  department: number
+  faculty_type: number
+}
+
+export interface UserType {
+  username: string
 }

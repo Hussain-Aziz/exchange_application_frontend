@@ -1,6 +1,6 @@
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { describe, expect, beforeEach, vitest, test, vi } from 'vitest'
-import Page from '../page';
+import LoginContent from '../content';
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -19,7 +19,7 @@ describe('Login', () => {
 
   beforeEach(() => {
     render(
-        <Page />
+        <LoginContent login={async (username:string, password:string) => {}} />
     );
   });
 

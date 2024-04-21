@@ -30,9 +30,9 @@ export default function Page() {
       const expiry = data.expiry
       const user = data.user
 
-      const algorithm = process.env.ENCRYPT_ALG || ''
-      const secret_key = process.env.ENCRYPT_KEY || ''
-      const IV = process.env.ENCRYPT_IV || ''
+      const algorithm = process.env.ENCRYPT_ALG || 'aes-256-cbc'
+      const secret_key = process.env.ENCRYPT_KEY || 'lmao'
+      const IV = process.env.ENCRYPT_IV || 'lmao'
 
       const cipher = createCipheriv(algorithm, secret_key, Buffer.from(IV))
 
