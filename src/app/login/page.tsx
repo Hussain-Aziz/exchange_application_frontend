@@ -41,7 +41,7 @@ export default function Page() {
       cookies().set('token', new_token, { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
       cookies().set('user', JSON.stringify(user), { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
 
-      return user.is_faculty ? '/teaching_faculty/home/' : '/student/home/'
+      return user.is_faculty ? '/faculty/home/' : '/student/home/'
     }
     return (await response.json()).non_field_errors[0]
   }

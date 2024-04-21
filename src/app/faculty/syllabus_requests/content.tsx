@@ -5,7 +5,7 @@ import { createStyledTableRow, createStyledTableCell } from '../../../components
 import { TableCell, TableRow, styled } from '@mui/material';
 import {useRouter} from 'next/navigation';
 
-export default function CourseRequestSelectionContent({fetchData}: {fetchData: (pageNum: number, searchText: string) => Promise<any>}) {
+export default function SyllabusRequestSelectionContent({fetchData}: {fetchData: (pageNum: number, searchText: string) => Promise<any>}) {
   const columns = ["COURSE CODE", "COURSE NAME", "STUDENT ID", "STUDENT NAME"];
 
   return (
@@ -26,7 +26,7 @@ function CustomTableRow({data}: {data: any}) {
   const StyledTableCell = styled(TableCell)(createStyledTableCell())
 
   const handleTableRowClick = () => {
-    router.push(`/teaching_faculty/course_requests/${data.course_application_id}`);
+    router.push(`/faculty/syllabus_requests/${data.course_application_id}`);
   };
 
   return (

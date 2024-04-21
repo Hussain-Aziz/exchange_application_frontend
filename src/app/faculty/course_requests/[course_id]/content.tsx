@@ -28,7 +28,7 @@ const SaveButton = ({submitToBackend}: {submitToBackend: (data: any) => Promise<
   const saveValues = () => {
     console.log(JSON.stringify(values))
     submitToBackend(values)
-    router.push('/teaching_faculty/course_requests')
+    router.push('/faculty/course_requests')
   }
   return (
     <Button variant="contained" onClick={saveValues}>Save</Button>
@@ -85,7 +85,7 @@ export default function CourseRequestContent({ course_data, submitToBackend, get
           validationSchema={validationSchema}
           onSubmit={values => {
             submitToBackend(values);
-            router.push('/teaching_faculty/course_requests')
+            router.push('/faculty/course_requests')
           }}
         >
           {({ errors, touched }) => (

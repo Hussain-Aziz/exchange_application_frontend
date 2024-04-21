@@ -16,21 +16,21 @@ export function middleware(request: NextRequest) {
 
   // check if student is trying to access faculty page or vice versa
   if (request.nextUrl.pathname.startsWith('/student')) {
-    url.pathname = '/teaching_faculty/home'
+    url.pathname = '/faculty/home'
     if (user_data.is_faculty) return NextResponse.redirect(url)
   }
-  if (request.nextUrl.pathname.startsWith('/teaching_faculty')) {
+  if (request.nextUrl.pathname.startsWith('/faculty')) {
     url.pathname = '/student/home'
     if (!user_data.is_faculty) return NextResponse.redirect(url)
   }
 
-  // check if user is trying to access /student or /teaching_faculty
+  // check if user is trying to access /student or /faculty
   if (request.nextUrl.pathname === '/student') {
     url.pathname = '/student/home'
     return NextResponse.redirect(url)
   }
-  if (request.nextUrl.pathname === '/teaching_faculty') {
-    url.pathname = '/teaching_faculty/home'
+  if (request.nextUrl.pathname === '/faculty') {
+    url.pathname = '/faculty/home'
     return NextResponse.redirect(url)
   }
   if (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '') {
@@ -45,6 +45,6 @@ export const config = {
   matcher: [
     '/',
     '/student/:path*',
-    '/teaching_faculty/:path*'
+    '/faculty/:path*'
   ],
 }

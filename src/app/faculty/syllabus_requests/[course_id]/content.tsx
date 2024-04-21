@@ -24,7 +24,7 @@ export default function SyllabusRequestsContent({ syllabus, sendToBackend }: { s
 
     sendToBackend({syllabus: fileInfo.fileLink});
 
-    router.push('/teaching_faculty/syllabus_requests/');
+    router.push('/faculty/syllabus_requests/');
   }
 
   return (

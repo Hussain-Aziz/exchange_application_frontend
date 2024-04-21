@@ -16,8 +16,8 @@ export default async function Page({params}: {params: {course_id: string}}) {
       headers: getHeaders(cookies()),
       body: JSON.stringify(data)
     })
-    revalidatePath('/teaching_faculty/course_requests')
-    redirect('/teaching_faculty/course_requests')
+    revalidatePath('/faculty/course_requests')
+    redirect('/faculty/course_requests')
   }
 
   const search_params = new URLSearchParams({
@@ -40,7 +40,7 @@ export default async function Page({params}: {params: {course_id: string}}) {
 
   console.log(course_data.models.length)
   if (course_data.models.length === 0) {
-    return redirect('/teaching_faculty/course_requests')
+    return redirect('/faculty/course_requests')
   }
 
   return (
