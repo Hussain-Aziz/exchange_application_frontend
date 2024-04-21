@@ -1,7 +1,13 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 import { createDecipheriv } from "crypto"
 
-export const baseEndpoint = "https://ec2-16-171-225-90.eu-north-1.compute.amazonaws.com/"
+var baseEndpoint = ""
+if (process.env.NODE_ENV === 'development'){
+  baseEndpoint = "http://127.0.0.1:8000/"
+}
+else {
+  baseEndpoint = "https://ec2-16-171-225-90.eu-north-1.compute.amazonaws.com/"
+}
 export const loginEndpoint = baseEndpoint + 'login/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
 export const startApplicationEndpoint = baseEndpoint + 'student/start_application/'

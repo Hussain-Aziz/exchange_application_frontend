@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Stack,
   Typography,
@@ -14,8 +14,9 @@ import useTimedAlert from "../../hooks/useTimedAlert";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from 'next/link'
 
-export default function LoginContent({login}:{login: (username: string, password: string) => Promise<any>}): React.ReactNode {
+export default function LoginContent({ login }: { login: (username: string, password: string) => Promise<any> }): React.ReactNode {
   const router = useRouter()
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -29,21 +30,26 @@ export default function LoginContent({login}:{login: (username: string, password
   }, [searchParams, setAlertInfo])
 
   const handleLoginClick = async () => {
-    setAlertInfo(undefined)
-    const username = emailRef.current?.value;
-    const password = passwordRef.current?.value;
+    setButtonDisabled(true)
+    try {
+      setAlertInfo(undefined)
+      const username = emailRef.current?.value;
+      const password = passwordRef.current?.value;
 
-    if (!username || !password) {
-      setAlertInfo({ severity: "error", message: "Please fill in all fields" })
-    } else if (!emailRegex.test(username)) {
-      setAlertInfo({ severity: "error", message: "Invalid email address" })
-    } else {
-      const nextPage = await login(username, password)
+      if (!username || !password) {
+        setAlertInfo({ severity: "error", message: "Please fill in all fields" })
+      } else if (!emailRegex.test(username)) {
+        setAlertInfo({ severity: "error", message: "Invalid email address" })
+      } else {
+        const nextPage = await login(username, password)
 
-      if (nextPage.startsWith('/'))
-        router.push(nextPage)
-      else
-        setAlertInfo({ severity: "error", message: nextPage })
+        if (nextPage.startsWith('/'))
+          router.push(nextPage)
+        else
+          setAlertInfo({ severity: "error", message: nextPage })
+      }
+    } finally {
+      setButtonDisabled(false)
     }
   }
 
@@ -54,7 +60,7 @@ export default function LoginContent({login}:{login: (username: string, password
       <PasswordField passwordRef={passwordRef} />
 
       <Stack spacing={1} marginTop={2} className="center-flex">
-        <Button onClick={handleLoginClick} variant="contained"  sx={ElementWidth}>Login</Button>
+        <Button disabled={isButtonDisabled} onClick={handleLoginClick} variant="contained" sx={ElementWidth}>Login</Button>
         <Typography variant="body2"><Link href="/login/recover">Forgot Password?</Link></Typography>
         <Typography variant="body2">{"Don't have an account?"} <Link href="/login/register">Sign Up</Link></Typography>
       </Stack>
