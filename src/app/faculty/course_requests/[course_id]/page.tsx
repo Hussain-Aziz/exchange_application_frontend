@@ -43,7 +43,14 @@ export default async function Page({params}: {params: {course_id: string}}) {
     return redirect('/faculty/course_requests')
   }
 
+  const faculty_type = JSON.parse(cookies().get('user')?.value!).faculty_type
+
   return (
-    <CourseRequestContent submitToBackend={submitToBackend} course_data={course_data.models[0]} get_comparison_result={get_comparison_result}/>
+    <CourseRequestContent 
+      submitToBackend={submitToBackend} 
+      course_data={course_data.models[0]} 
+      get_comparison_result={get_comparison_result}
+      faculty_type={faculty_type}
+    />
   );
 }

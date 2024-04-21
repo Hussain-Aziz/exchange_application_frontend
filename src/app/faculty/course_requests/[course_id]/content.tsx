@@ -21,23 +21,44 @@ import ComparisonResult from './ComparisonResult';
 import './courseRequest.css'
 import { useFormikContext } from 'formik';
 import { CourseApplication } from '@/constants/types/courseApplicationTypes';
+import DelegateDialog from './DelegateDialog';
+
+const DelegateButton = ({submitToBackend}: {submitToBackend: (data: any) => Promise<void>}) => {
+  const router = useRouter()
+  const { values } = useFormikContext();
+  const saveValues = (email: string) => {
+    const v = values as any
+    const values_with_delegate = {...v, delegate: email}
+    submitToBackend(values_with_delegate)
+    router.push('/faculty/course_requests')
+  }
+
+  const [delegateDialogOpen, setDelegateDialogOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant="contained" onClick={() => {setDelegateDialogOpen(true)}}>Delegate</Button>
+      <DelegateDialog open={delegateDialogOpen} setOpen={setDelegateDialogOpen} onConfirm={saveValues} />
+    </>
+  )
+}
 
 const SaveButton = ({submitToBackend}: {submitToBackend: (data: any) => Promise<void>}) => {
   const router = useRouter()
   const { values } = useFormikContext();
   const saveValues = () => {
-    console.log(JSON.stringify(values))
     submitToBackend(values)
     router.push('/faculty/course_requests')
   }
   return (
     <Button variant="contained" onClick={saveValues}>Save</Button>
+
   )
 }
 
 
-export default function CourseRequestContent({ course_data, submitToBackend, get_comparison_result }: 
-  { course_data: CourseApplication, submitToBackend: (data: any) => Promise<void>, get_comparison_result: (id: number) => Promise<any>}) {
+export default function CourseRequestContent({ course_data, submitToBackend, get_comparison_result, faculty_type }: 
+  { course_data: CourseApplication, submitToBackend: (data: any) => Promise<void>, get_comparison_result: (id: number) => Promise<any>, faculty_type:number}) {
   const router = useRouter();
 
   const [showComparison, setShowComparison] = useState(false);
@@ -140,6 +161,9 @@ export default function CourseRequestContent({ course_data, submitToBackend, get
                   pdf2={course_data.syllabus} 
               />}
               <div className='SaveSubmitContainer'>
+                {(faculty_type === 0 || faculty_type === 2) && 
+                  <DelegateButton submitToBackend={submitToBackend}/>
+                }
                 <SaveButton submitToBackend={submitToBackend}/>
                 <Button variant="contained" type="submit">Submit</Button>
               </div>

@@ -1,3 +1,4 @@
+'use client';
 import { useRouter } from 'next/navigation'
 import HomePageButton from '../../../components/HomePageButton'
 export default function FacultyHomeContent({logout, faculty_type}: {logout: () => void, faculty_type: number}){
@@ -14,7 +15,7 @@ export default function FacultyHomeContent({logout, faculty_type}: {logout: () =
   return (
     <>
       {
-      (type == 'Admin Assistant' || type == 'Head of Department' || type == 'Associate Dean' || type == 'Advisor') &&
+      (type == 'Admin Assistant' || type == 'Head of Department' || type == 'Teaching Faculty' || type == 'Associate Dean' || type == 'Advisor') &&
       <HomePageButton onClick={'/faculty/course_requests'} label='View Course Approval Requests' numIndicators={2} marginTop='10px !important'/>
       }
       {(type == 'Admin Assistant') &&
