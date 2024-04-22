@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   Stack,
   Typography,
@@ -29,7 +29,7 @@ export default function LoginContent({ login }: { login: (username: string, pass
     if (searchParams.get("recovered")) setAlertInfo({ severity: "info", message: "Check your email for a password reset link" })
   }, [searchParams, setAlertInfo])
 
-  const handleLoginClick = async () => {
+  const handleLoginClick = useCallback(async () => {
     setButtonDisabled(true)
     try {
       setAlertInfo(undefined)
@@ -51,7 +51,19 @@ export default function LoginContent({ login }: { login: (username: string, pass
     } finally {
       setButtonDisabled(false)
     }
-  }
+  }, [login, router, setAlertInfo])
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleLoginClick()
+      }
+    }
+    document.addEventListener('keypress', handleKeyPress)
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress)
+    }
+  }, [handleLoginClick])
 
   return (
     <>
