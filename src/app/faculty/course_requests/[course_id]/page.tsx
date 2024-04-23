@@ -38,7 +38,6 @@ export default async function Page({params}: {params: {course_id: string}}) {
   })
   const course_data = await response.json() as PaginatedRequest<CourseApplication>
 
-  console.log(course_data.models.length)
   if (course_data.models.length === 0) {
     return redirect('/faculty/course_requests')
   }

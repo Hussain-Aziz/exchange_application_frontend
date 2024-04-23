@@ -14,7 +14,10 @@ export function middleware(request: NextRequest) {
 
   const user_data = JSON.parse(user.value)
 
-  // check if student is trying to access faculty page or vice versa
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    url.pathname = '/student/home'
+    //if (!user_data.is_admin) return NextResponse.redirect(url)
+  }  
   if (request.nextUrl.pathname.startsWith('/student')) {
     url.pathname = '/faculty/home'
     if (user_data.is_faculty) return NextResponse.redirect(url)
@@ -33,6 +36,10 @@ export function middleware(request: NextRequest) {
     url.pathname = '/faculty/home'
     return NextResponse.redirect(url)
   }
+  if (request.nextUrl.pathname === '/admin') {
+    url.pathname = '/admin/home'
+    return NextResponse.redirect(url)
+  }
   if (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '') {
     url.pathname = '/login'
     return NextResponse.redirect(url)
@@ -45,6 +52,7 @@ export const config = {
   matcher: [
     '/',
     '/student/:path*',
-    '/faculty/:path*'
+    '/faculty/:path*',
+    '/admin/:path*',
   ],
 }

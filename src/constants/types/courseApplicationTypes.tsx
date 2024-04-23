@@ -43,4 +43,6 @@ export interface Faculty {
 
 export interface UserType {
   username: string
+  first_name: string
+  last_name: string
 }

@@ -6,11 +6,15 @@ export const loginEndpoint = baseEndpoint + 'login/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
 export const startApplicationEndpoint = baseEndpoint + 'student/start_application/'
 export const listCoursesEndpoint = baseEndpoint + 'student/courses/'
+
 export const availableApprovalsEnpoint = baseEndpoint + 'faculty/available_approvals/'
 export const availableSyllabusEndpoint = baseEndpoint + 'faculty/available_syllabus/'
 export const UploadSyllabus = baseEndpoint + 'faculty/upload_syllabus/'
 export const ApproveCourse = baseEndpoint + 'faculty/approve_course/'
+
 export const comparisonEndpoint = baseEndpoint + 'users/compare_application/'
+
+export const facultListEndpoint = baseEndpoint + 'ixo/faculty/'
 
 export function getHeaders(cookies: ReadonlyRequestCookies) {
   const token_cookie = cookies.get('token')
