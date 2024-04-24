@@ -7,8 +7,15 @@ import { PaginatedRequest } from '@/constants/types/paginatedRequest'
 
 export default async function Page() {
 
-  const editFacultyInfo = async (faculty:Faculty, data: any) => {
+  //accept faculty.id, name, email, getDepartments().indexOf(department), getFacultyTypes().indexOf(facultyType)
+  const editFacultyInfo = async (id: number, department: number, facultyType: number) => {
     "use server"
+    const data = {
+      id: id,
+      department: department,
+      faculty_type: facultyType
+    }
+    console.log(JSON.stringify(data))
     const response = await fetch(facultListEndpoint, {
       method: 'POST',
       headers: getHeaders(cookies()),
