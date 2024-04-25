@@ -12,11 +12,7 @@ export default function ComparisonResult({id, comparison_result, running_compari
     const [real_comparison_result, setComparisonResult] = useState<any>(comparison_result);
 
     useEffect(() => {
-      if (running_comparison) {
-        get_comparison_result(id)
-        .then((result) => {setComparisonResult(result)})
-      }
-
+      get_comparison_result(id).then((result) => {setComparisonResult(result)})
     }, [get_comparison_result, id, running_comparison]);
 
     if (real_comparison_result === null || real_comparison_result === undefined) {
@@ -31,7 +27,8 @@ export default function ComparisonResult({id, comparison_result, running_compari
       );
     }
 
-  const match = Number(String(real_comparison_result['match percentage']).replace('%', ''));
+  const match = Math.round(Number(String(real_comparison_result['match percentage']).replace('%', '')) * 100) / 100;
+  
   const color = match > 80 ? 'green' : 
                 match > 60 ? undefined : // default color
                             'red';
@@ -40,7 +37,7 @@ export default function ComparisonResult({id, comparison_result, running_compari
     <Grid container className="full-screen" sx={{ height: '400px' }}>
       <Grid item xs={12} className="login-background" sx={{height: '400px', overflow: 'auto'}}>
         <Typography variant="h4" sx={{ marginBottom: '10px', textAlign: 'center' }}>Comparison Result</Typography>
-        <Typography variant="h6" sx={{ marginBottom: '20px', color: color, textAlign:'center' }}>{`Match: ${real_comparison_result['match percentage']}`}</Typography>
+        <Typography variant="h6" sx={{ marginBottom: '20px', color: color, textAlign:'center' }}>{`Match: ${match}%`}</Typography>
         <Grid container>
           {
             Object.keys(real_comparison_result).map((key: string, index: number) => {
