@@ -17,6 +17,7 @@ export interface CourseApplication {
   university: number
   delegated_to : Faculty | null
   delegated_approval: boolean
+  comments: string
 }
 
 export interface Student {

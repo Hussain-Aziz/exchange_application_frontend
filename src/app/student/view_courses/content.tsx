@@ -1,9 +1,20 @@
 'use client';
 import React from 'react'
-import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Link } from '@mui/material'
+import { 
+  TableContainer, 
+  Paper, 
+  Table, 
+  TableHead, 
+  TableRow, 
+  TableCell, 
+  TableBody, 
+  Link,
+  Tooltip
+ } from '@mui/material'
 import { CourseApplication } from '@/constants/types/courseApplicationTypes';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CommentIcon from '@mui/icons-material/Comment';
 
 
 export default function CoursesContent({ courses, cancelApplication }: { courses: CourseApplication[], cancelApplication: (id: number) => void }) {
@@ -42,11 +53,12 @@ function CourseRow({ course, cancelApplication }: { course: CourseApplication, c
       <TableCell>{course.aus_course}</TableCell>
       <TableCell>
         <Link href={course.syllabus} target="_blank" rel="noopener noreferrer">Host Syllabus</Link>
-        {", "}
-        <Link href={course.syllabus} target="_blank" rel="noopener noreferrer">AUS Syllabus</Link>
+        {course.aus_syllabus && ", "}
+        {course.aus_syllabus && <Link href={course.aus_syllabus} target="_blank" rel="noopener noreferrer">AUS Syllabus</Link>}
       </TableCell>
       <TableCell>{status}</TableCell>
       <TableCell>
+        <>
         {course.approved_status === null &&
           <IconButton onClick={() => {
             cancelApplication(course.course_application_id)
@@ -55,6 +67,14 @@ function CourseRow({ course, cancelApplication }: { course: CourseApplication, c
             <DeleteIcon />
           </IconButton>
         }
+        {course.comments &&
+        <Tooltip title={course.comments}>
+          <IconButton>
+            <CommentIcon />
+          </IconButton>
+        </Tooltip>
+        }
+        </>
       </TableCell>
     </TableRow>
   )
