@@ -1,16 +1,29 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import DataTable from '../../../components/DataTable';
 import { createStyledTableRow, createStyledTableCell } from '../../../components/StyledTableComponents';
 import { TableCell, TableRow, styled } from '@mui/material';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-export default function CourseRequestSelectionContent({fetchData}: {fetchData: (pageNum: number, searchText: string) => Promise<any>}) {
+export default function CourseRequestSelectionContent({ fetchData }: { fetchData: (pageNum: number, searchText: string) => Promise<any> }) {
+
+  
+   // force redirect to /faculty/home on back button click
+  useEffect(() => {
+    const forceToHome = function (event: any) {
+      window.location.href = '/faculty/home';
+    }
+    window.addEventListener('popstate', forceToHome);
+    return () => {
+      window.removeEventListener('popstate', forceToHome);
+    }
+  }, []);
+
   const columns = ["COURSE CODE", "COURSE NAME", "STUDENT ID", "STUDENT NAME"];
 
   return (
-    <div style={{maxWidth: '90%'}}>
-      <DataTable 
+    <div style={{ maxWidth: '90%' }}>
+      <DataTable
         columns={columns}
         fetchData={fetchData}
         UserDataTableRow={CustomTableRow}
@@ -19,7 +32,7 @@ export default function CourseRequestSelectionContent({fetchData}: {fetchData: (
   );
 }
 
-function CustomTableRow({data}: {data: any}) {
+function CustomTableRow({ data }: { data: any }) {
   const router = useRouter();
 
   const StyledTableRow = styled(TableRow)(createStyledTableRow())
