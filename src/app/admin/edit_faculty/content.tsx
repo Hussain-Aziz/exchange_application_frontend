@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Faculty } from "@/constants/types/courseApplicationTypes";
 import {
   Stack,
@@ -23,6 +23,8 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import { styled } from '@mui/system';
+import { createStyledTableCell, createStyledTableRow } from "@/components/StyledTableComponents";
 
 export default function EditFacultyContent({ facultyList, editFacultyInfo }: { facultyList: Faculty[], editFacultyInfo: any }) {
 
@@ -31,6 +33,9 @@ export default function EditFacultyContent({ facultyList, editFacultyInfo }: { f
   const handleSearchTextChange = (event: any) => {
     setSearchText(event.target.value);
   };
+
+  const StyledTableCell = useMemo(() => styled(TableCell)(createStyledTableCell()), []);
+  const columns = ["Name", "Email", "Department", "Faculty Type", ""];
 
   return (
     <>
@@ -47,27 +52,28 @@ export default function EditFacultyContent({ facultyList, editFacultyInfo }: { f
             </InputAdornment>
           ),
         }} />
-      <TableContainer component={Paper} style={{ maxHeight: 'calc(100vh - 200px)', overflow: 'auto' }}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Department</TableCell>
-              <TableCell>Faculty Type</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {facultyList.map((faculty: Faculty) => {
-              if (searchText !== '' && !faculty.user.username.toLowerCase().includes(searchText.toLowerCase())) {
-                return null;
-              }
-              return <EditFacultyTable faculty={faculty} key={faculty.id} editFacultyInfo={editFacultyInfo} />;
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Paper>
+        <TableContainer style={{ overflowX: undefined }}>
+          <Table>
+            <TableHead>
+              <TableRow style={{ padding: '10px' }}>
+                {columns.map((col) => {
+                  return (<StyledTableCell style={{ padding: '10px', backgroundColor: '#efefef' }} key={col}>{col}</StyledTableCell>)
+                })}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {facultyList.map((faculty: Faculty) => {
+                if (searchText !== '' && !faculty.user.username.toLowerCase().includes(searchText.toLowerCase())) {
+                  return null;
+                }
+                return <EditFacultyTable faculty={faculty} key={faculty.id} editFacultyInfo={editFacultyInfo} />;
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
     </>
   )
 }
@@ -82,27 +88,30 @@ function EditFacultyTable({ faculty, editFacultyInfo }: { faculty: Faculty, edit
     setIsEditing(false);
   }
 
+  const StyledTableRow = styled(TableRow)(createStyledTableRow())
+  const StyledTableCell = styled(TableCell)(createStyledTableCell())
+
   return (
-    <TableRow key={faculty.id}>
-      <TableCell component="th" scope="row">
+    <StyledTableRow key={faculty.id}>
+      <StyledTableCell component="th" scope="row">
         {`${faculty.user.first_name || ''} ${faculty.user.last_name || ''}`}
-      </TableCell>
-      <TableCell>
+      </StyledTableCell>
+      <StyledTableCell>
         {faculty.user.username}
-      </TableCell>
-      <TableCell>
+      </StyledTableCell>
+      <StyledTableCell>
         {isEditing ? <Select value={department} onChange={(e) => setDepartment(e.target.value)}>{getDepartments().map((dept) => <MenuItem key={dept} value={dept}>{dept}</MenuItem>)}</Select> : department}
-      </TableCell>
-      <TableCell>
+      </StyledTableCell>
+      <StyledTableCell>
         {isEditing ? (<Select value={facultyType} onChange={(e) => setFacultyType(e.target.value)}>{getFacultyTypes().map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}</Select>) : facultyType}
-      </TableCell>
-      <TableCell>
+      </StyledTableCell>
+      <StyledTableCell>
         {isEditing
           ? <IconButton onClick={onSaveClick}><SaveIcon /></IconButton>
           : <IconButton onClick={() => setIsEditing(!isEditing)}><EditIcon /></IconButton>
         }
-      </TableCell>
-    </TableRow>
+      </StyledTableCell>
+    </StyledTableRow>
   );
 }
 

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react'
+import React, { useMemo } from 'react'
 import { 
   TableContainer, 
   Paper, 
@@ -15,27 +15,31 @@ import { CourseApplication } from '@/constants/types/courseApplicationTypes';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CommentIcon from '@mui/icons-material/Comment';
+import { styled } from '@mui/system';
+import { createStyledTableCell, createStyledTableRow } from "@/components/StyledTableComponents";
 
 
 export default function CoursesContent({ courses, cancelApplication }: { courses: CourseApplication[], cancelApplication: (id: number) => void }) {
+  const columns = ["Course", "Title", "AUS Course", "Syllabi", "Status", ""]
+  const StyledTableCell = useMemo(() => styled(TableCell)(createStyledTableCell()), []);
+
   return (
-    <TableContainer component={Paper} style={{ maxHeight: 'calc(100vh - 200px)', overflow: 'auto' }}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <Paper>
+    <TableContainer style={{ overflowX: undefined }}>
+      <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>Course</TableCell>
-            <TableCell>Title</TableCell>
-            <TableCell>AUS Course</TableCell>
-            <TableCell>Syllabi</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell></TableCell>
+          <TableRow style={{ padding: '10px' }}>
+            {columns.map((col) => {
+              return (<StyledTableCell style={{ padding: '10px', backgroundColor: '#efefef' }} key={col}>{col}</StyledTableCell>)
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
-          {courses.map((course: CourseApplication) => <CourseRow key={course.course_application_id} course={course} cancelApplication={cancelApplication} />)}
+        {courses.map((course: CourseApplication) => <CourseRow key={course.course_application_id} course={course} cancelApplication={cancelApplication} />)}
         </TableBody>
       </Table>
     </TableContainer>
+  </Paper>
   )
 }
 
@@ -46,18 +50,23 @@ function CourseRow({ course, cancelApplication }: { course: CourseApplication, c
   } else if (course.approved_status === false) {
     status = "Rejected"
   }
+
+  
+  const StyledTableRow = styled(TableRow)(createStyledTableRow())
+  const StyledTableCell = styled(TableCell)(createStyledTableCell())
+
   return (
-    <TableRow key={course.course_application_id}>
-      <TableCell>{course.course_code}</TableCell>
-      <TableCell>{course.course_title}</TableCell>
-      <TableCell>{course.aus_course}</TableCell>
-      <TableCell>
+    <StyledTableRow key={course.course_application_id}>
+      <StyledTableCell>{course.course_code} </StyledTableCell>
+      <StyledTableCell>{course.course_title}</StyledTableCell>
+      <StyledTableCell>{course.aus_course}</StyledTableCell>
+      <StyledTableCell>
         <Link href={course.syllabus} target="_blank" rel="noopener noreferrer">Host Syllabus</Link>
         {course.aus_syllabus && ", "}
         {course.aus_syllabus && <Link href={course.aus_syllabus} target="_blank" rel="noopener noreferrer">AUS Syllabus</Link>}
-      </TableCell>
-      <TableCell>{status}</TableCell>
-      <TableCell>
+      </StyledTableCell>
+      <StyledTableCell>{status}</StyledTableCell>
+      <StyledTableCell>
         <>
         {course.approved_status === null &&
           <IconButton onClick={() => {
@@ -75,7 +84,7 @@ function CourseRow({ course, cancelApplication }: { course: CourseApplication, c
         </Tooltip>
         }
         </>
-      </TableCell>
-    </TableRow>
+      </StyledTableCell>
+    </StyledTableRow>
   )
 }
