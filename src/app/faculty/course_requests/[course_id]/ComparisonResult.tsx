@@ -27,17 +27,24 @@ export default function ComparisonResult({id, comparison_result, running_compari
       );
     }
 
-  const match = Math.round(Number(String(real_comparison_result['match percentage']).replace('%', '')) * 100) / 100;
   
-  const color = match > 80 ? 'green' : 
-                match > 60 ? undefined : // default color
-                            'red';
+  let color = undefined;
+  let match = undefined;
+
+  if (real_comparison_result['match percentage'] !== undefined) {
+    let match = Math.round(Number(String(real_comparison_result['match percentage']).replace('%', '')) * 100) / 100;
+    
+    if (match > 80) color = 'green';
+    if (match < 60) color = 'orange';
+  }
+
+  const matchText = match !== undefined ? `Match: ${match}%` : 'Unknown Match Percentage';
 
   return (
     <Grid container className="full-screen" sx={{ height: '400px' }}>
       <Grid item xs={12} className="login-background" sx={{height: '400px', overflow: 'auto'}}>
         <Typography variant="h4" sx={{ marginBottom: '10px', textAlign: 'center' }}>Comparison Result</Typography>
-        <Typography variant="h6" sx={{ marginBottom: '20px', color: color, textAlign:'center' }}>{`Match: ${match}%`}</Typography>
+        <Typography variant="h6" sx={{ marginBottom: '20px', color: color, textAlign:'center' }}>{matchText}</Typography>
         <Grid container>
           {
             Object.keys(real_comparison_result).map((key: string, index: number) => {
