@@ -121,6 +121,7 @@ export default function CourseRequestContent({ course_data, submitToBackend, get
             gradeRequirement: course_data.grade_required || undefined,
             preReqsMet: course_data.pre_requisites_met || undefined,
             approved: course_data.approved_status || undefined,
+            comments: course_data.comments || undefined,
           }}
           validationSchema={validationSchema}
           onSubmit={values => {
@@ -237,7 +238,6 @@ function CourseRequestContent_TF({ course_data, submitToBackend, get_comparison_
                   key={course_data.course_application_id}
                   id={course_data.course_application_id}
                   comparison_result={course_data.comparison_result}
-                  running_comparison={course_data.running_comparison}
                   get_comparison_result={get_comparison_result}
                 />
                 : <RawPdf
