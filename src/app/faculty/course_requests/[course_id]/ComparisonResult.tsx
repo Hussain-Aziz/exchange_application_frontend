@@ -32,7 +32,7 @@ export default function ComparisonResult({id, comparison_result, get_comparison_
   let match = undefined;
 
   if (real_comparison_result['match percentage'] !== undefined) {
-    let match = Math.round(Number(String(real_comparison_result['match percentage']).replace('%', '')) * 100) / 100;
+    match = Math.round(Number(String(real_comparison_result['match percentage']).replace('%', '')) * 100) / 100;
     
     if (match > 80) color = 'green';
     if (match < 60) color = 'orange';

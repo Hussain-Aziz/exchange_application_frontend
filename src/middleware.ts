@@ -15,16 +15,16 @@ export function middleware(request: NextRequest) {
   const user_data = JSON.parse(user.value)
 
   if (request.nextUrl.pathname.startsWith('/admin')) {
-    url.pathname = '/student/home'
-    if (!user_data.is_admin) return NextResponse.redirect(url)
+    url.pathname = user_data.is_faculty ? '/faculty/home' : '/student/home'
+    if (!(user_data.is_admin === true)) return NextResponse.redirect(url)
   }  
   if (request.nextUrl.pathname.startsWith('/student')) {
-    url.pathname = '/faculty/home'
-    if (user_data.is_faculty) return NextResponse.redirect(url)
+    url.pathname = user_data.is_admin ? '/admin/home' : '/faculty/home'
+    if (!(user_data.is_faculty === false)) return NextResponse.redirect(url)
   }
   if (request.nextUrl.pathname.startsWith('/faculty')) {
-    url.pathname = '/student/home'
-    if (!user_data.is_faculty) return NextResponse.redirect(url)
+    url.pathname = user_data.is_admin ? '/admin/home' : '/student/home'
+    if (!(user_data.is_faculty === true)) return NextResponse.redirect(url)
   }
 
   // check if user is trying to access /student or /faculty
