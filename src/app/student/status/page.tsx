@@ -12,13 +12,28 @@ export default async function Page() {
   const applicationData = await applicationDataRequest.json() as Student
 
   let applicationState = undefined
+  let extraInfo = ""
   if (applicationData.aus_id === null) applicationState = "Not Started"
   else if (applicationData.ixo_details === null) applicationState = "Waiting for initial approval from exchange office"
-  else applicationState = "Adding Courses"
+  else if (!applicationData.submitted_form) applicationState = "Adding Courses"
+  else if (!applicationData.ixo_details.advisor_approval || !applicationData.ixo_details.associate_dean_approval || !applicationData.ixo_details.ixo_approval) {
+    applicationState = "Waiting for form approvals: "
+    extraInfo += "Advisor " + (!applicationData.ixo_details.advisor_approval ? "(Not Approved), " : "(Approved), ")
+    extraInfo += "Associate Dean " + (!applicationData.ixo_details.associate_dean_approval ? "(Not Approved), " : "(Approved), ")
+    extraInfo += "IXO " + (!applicationData.ixo_details.ixo_approval ? "(Not Approved)" : "(Approved)")
+  }
+  else {
+    applicationState = "Form Approved."
+    extraInfo = "Enjoy your exchange at " + applicationData.university.university_name + "!"
+  }
 
-  return (
+  return (<>
     <Typography variant="h5">
       {`Current Status: ${applicationState}`}
     </Typography>
+    <Typography variant="h6">
+      {extraInfo}
+    </Typography>
+    </>
   );
 }

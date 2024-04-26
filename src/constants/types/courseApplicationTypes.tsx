@@ -36,6 +36,7 @@ export interface Student {
   user: UserType
   university: University
   ixo_details: IXODetails
+  submitted_form: boolean
 }
 export interface University {
   university_name: string
@@ -64,5 +65,14 @@ export interface IXODetails {
   agreement: boolean
   initial_approval_date: string
   student_type: string
-  final_approval: boolean
+  advisor_approval: boolean
+  advisor_approval_date: string
+  associate_dean_approval: boolean
+  associate_dean_approval_date: string
+  scholarship_approval: boolean
+  scholarship_approval_date: string
+  sponsorship_approval: boolean
+  sponsorship_approval_date: string
+  ixo_approval: boolean
+  ixo_approval_date: string
 }

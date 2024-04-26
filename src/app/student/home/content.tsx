@@ -12,12 +12,12 @@ export default function StudentHomeContent({ applicationState, logout, withdrawA
 
   const submitCourses = () => {
     submitApplication()
-    location.reload()
+    fullLogout()
   }
 
   const withdraw = () => {
     withdrawApplication()
-    router.push('/login')
+    fullLogout()
   }
 
   const fullLogout = () => {

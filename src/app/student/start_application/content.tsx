@@ -42,7 +42,9 @@ export default function StartApplicationContent({submitToBackend} : {submitToBac
     .required('Contact name at host university is required'),
     hostContactEmail: Yup.string()
     .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Must be a valid email address')
-    .required('Contact email at host university is required')
+    .required('Contact email at host university is required'),
+    department: Yup.string()
+    .required('Current department is required'),
   });
 
   return (
@@ -60,7 +62,8 @@ export default function StartApplicationContent({submitToBackend} : {submitToBac
               expectedGraduation: '',
               university: '',
               hostContactName: '',
-              hostContactEmail: ''
+              hostContactEmail: '',
+              department: '',
             }}
             validationSchema={validationSchema}
             onSubmit={async (values) => {
@@ -84,6 +87,15 @@ export default function StartApplicationContent({submitToBackend} : {submitToBac
                 </FormControl>
                 <Field variant="filled" size="small" as={TextField} name="presentMajor" label="Present Major" error={touched.presentMajor && !!errors.presentMajor} helperText={touched.presentMajor && errors.presentMajor} style={{ marginBottom: '20px' }} />
                 <FormControl variant="filled" size="small" style={{ marginBottom: '20px' }}>
+                  <InputLabel>Department</InputLabel>
+                  <Field as={Select} name="department" label="Department" error={touched.department && !!errors.department} helperText={touched.department && errors.department}>
+                    <MenuItem value="">None</MenuItem>
+                    {getDepartments().map((department, index) => (
+                      <MenuItem key={department} value={index}>{department}</MenuItem>
+                    ))}
+                  </Field>
+                </FormControl>
+                <FormControl variant="filled" size="small" style={{ marginBottom: '20px' }}>
                   <InputLabel>Current Standing</InputLabel>
                   <Field as={Select} name="currentStanding" label="Current Standing" error={touched.currentStanding && !!errors.currentStanding} helperText={touched.currentStanding && errors.currentStanding}>
                     <MenuItem value="">None</MenuItem>
@@ -105,4 +117,30 @@ export default function StartApplicationContent({submitToBackend} : {submitToBac
         </Grid>
       </Grid>
   );
+}
+function getDepartments(): string[] {
+  return [
+    "Unknown",
+    "Architecture",
+    "Art and Design",
+    "Arabic and Translation Studies",
+    "Biology, Chemistry and Environmental Sciences",
+    "English",
+    "International Studies",
+    "Media Communication",
+    "Mathematics and Statistics",
+    "Physics",
+    "Psychology",
+    "Chemical and Biological Engineering",
+    "Civil Engineering",
+    "Computer Science and Engineering",
+    "Electrical Engineering",
+    "Industrial Engineering",
+    "Mechanical Engineering",
+    "Accounting",
+    "Economics",
+    "Finance",
+    "Management, Strategy and Entrepreneurship",
+    "Marketing and Information Systems",
+  ];
 }

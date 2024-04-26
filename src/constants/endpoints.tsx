@@ -11,6 +11,8 @@ export const availableApprovalsEnpoint = baseEndpoint + 'faculty/available_appro
 export const availableSyllabusEndpoint = baseEndpoint + 'faculty/available_syllabus/'
 export const UploadSyllabus = baseEndpoint + 'faculty/upload_syllabus/'
 export const ApproveCourse = baseEndpoint + 'faculty/approve_course/'
+export const facultyListStudent = baseEndpoint + 'faculty/list_students/'
+export const facultyApproveForm = baseEndpoint + 'faculty/approve_student/'
 
 export const comparisonEndpoint = baseEndpoint + 'users/compare_application/'
 

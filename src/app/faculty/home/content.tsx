@@ -21,6 +21,9 @@ export default function FacultyHomeContent({logout, faculty_type}: {logout: () =
       {(type == 'Admin Assistant') &&
         <HomePageButton onClick={'/faculty/syllabus_requests'} label='View Syllabus Requests' numIndicators={2} />
       }
+      {(type == 'Advisor' || type == 'Associate Dean' || type == 'Scholarship' || type == 'Sponsorship') &&
+        <HomePageButton onClick={'/faculty/approve_application'} label='Approve Applications' numIndicators={2} />
+      }
       <HomePageButton onClick={fullLogout} label='Logout'/>
     </>
   )

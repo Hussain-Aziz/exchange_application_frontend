@@ -18,10 +18,6 @@ export default async function Page() {
       method: 'DELETE',
       headers: getHeaders(cookies())
     })
-
-    if (withdrawRequest.status === 200) {
-      logout()
-    }
   }
 
   const submitApplication = async () => {
@@ -30,10 +26,6 @@ export default async function Page() {
       method: 'POST',
       headers: getHeaders(cookies())
     })
-
-    if (submitRequest.status === 200) {
-      logout()
-    }
   }
 
   const applicationDataRequest = await fetch(applicationInfoEndpoint, {
@@ -46,7 +38,8 @@ export default async function Page() {
   let applicationState: ApplicationState = undefined
   if (applicationData.aus_id === null) applicationState = "NOT_STARTED"
   else if (applicationData.ixo_details === null) applicationState = "WAITING_INITIAL_APPROVAL"
-  else applicationState = "ADDING_COURSES"
+  else if (!applicationData.submitted_form) applicationState = "ADDING_COURSES"
+  else applicationState = "WAITING_SIGNATURES"
 
   return <StudentHomeContent applicationState={applicationState} logout={logout} withdrawApplication={withdrawApplication} submitApplication={submitApplication}/>
 
