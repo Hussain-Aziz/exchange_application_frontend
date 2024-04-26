@@ -8,6 +8,7 @@ type LoginSuccess = {
   user: {
     username: string,
     is_faculty: boolean,
+    is_admin: boolean
   }
 }
 
@@ -32,7 +33,9 @@ export default function Page() {
       cookies().set('token', token, { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
       cookies().set('user', JSON.stringify(user), { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
 
-      return user.is_faculty ? '/faculty/home/' : '/student/home/'
+      return user.is_admin ? '/admin/home/' 
+                          : user.is_faculty ? '/faculty/home/' 
+                                            : '/student/home/'
     }
     return (await response.json()).non_field_errors[0]
   }

@@ -19,9 +19,11 @@ export interface CourseApplication {
   delegated_approval: boolean
   comments: string
   force_approval_to: string | null
+  approved_by: string | null
 }
 
 export interface Student {
+  id: number
   aus_id: string
   name: string
   phone_num: string
@@ -33,6 +35,7 @@ export interface Student {
   host_contact_email: string
   user: UserType
   university: University
+  ixo_details: IXODetails
 }
 export interface University {
   university_name: string
@@ -50,4 +53,16 @@ export interface UserType {
   username: string
   first_name: string
   last_name: string
+}
+
+export interface IXODetails {
+  initial_approval_id: number
+  moe_approval: boolean
+  usdoe_approval: boolean
+  acreditted: boolean
+  acreditted_comments: string
+  agreement: boolean
+  initial_approval_date: string
+  student_type: string
+  final_approval: boolean
 }

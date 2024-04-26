@@ -12,30 +12,30 @@ export default async function Page({params}: {params: {student_id: string}}) {
     id: params.student_id
   });
 
-  const response = await fetch(`${studentListEnpoint}?${search_params.toString()}`, {
+  const student_data_request = await fetch(`${studentListEnpoint}?${search_params.toString()}`, {
     method: 'GET',
     headers: getHeaders(cookies())
   })
   
-  const course_data = await response.json() as PaginatedRequest<Student>
+  const student_data = await student_data_request.json() as PaginatedRequest<Student>
 
-  console.log(course_data.models.length)
-  if (course_data.models.length === 0) {
+  console.log(student_data.models.length)
+  if (student_data.models.length === 0) {
     return redirect('/admin/view_student')
   }
 
-  const student = course_data.models[0]
+  const student = student_data.models[0]
 
-  const request2 = await fetch(`${studentCourseListEnpoint}?id=${student.aus_id}`, {
+  const course_request = await fetch(`${studentCourseListEnpoint}?id=${student.id}`, {
     method: 'GET',
     headers: getHeaders(cookies())
   })
-  const courses = await request2.json() as CourseApplication[]
+  const courses = await course_request.json() as CourseApplication[]
 
-  const request3 = await fetch(`${facultListEndpoint}`, {
+  const faculty_request = await fetch(`${facultListEndpoint}`, {
     headers: getHeaders(cookies())
   })
-  const facultyList = await request3.json() as Faculty[]
+  const facultyList = await faculty_request.json() as Faculty[]
 
   const modifyApplication = async (data: any) => {
     "use server"
@@ -43,7 +43,7 @@ export default async function Page({params}: {params: {student_id: string}}) {
     const response = await fetch(`${studentCourseListEnpoint}`, {
       method: 'PATCH',
       headers: getHeaders(cookies()),
-      body: JSON.stringify({ data })
+      body: JSON.stringify(data)
     })
   }
 

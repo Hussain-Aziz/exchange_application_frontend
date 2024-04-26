@@ -12,7 +12,7 @@ export default async function Page({params}: {params: {course_id: string}}) {
     const searchParams = new URLSearchParams()
     if (searchText !== '' && searchText !== undefined) searchParams.append('search', searchText)
     searchParams.append('page', pageNum.toString())
-    searchParams.append('only_in_progress', 'true')
+    searchParams.append('only_final_approval', 'true')
     
     const response = await fetch(`${studentListEnpoint}?${searchParams.toString()}`, {
       method: 'GET',
@@ -20,8 +20,7 @@ export default async function Page({params}: {params: {course_id: string}}) {
     })
 
     const body = await response.json() as PaginatedRequest<Student>
-    return body
-    
+    return body 
   }
 
   return (

@@ -40,7 +40,7 @@ export function CustomTableRow({data}: {data: Student}) {
   const StyledTableCell = styled(TableCell)(createStyledTableCell())
 
   const handleTableRowClick = () => {
-    router.push(`/admin/view_student/${data.id}`);
+    router.push(`/admin/new_application/${data.id}`);
   };
 
   return (

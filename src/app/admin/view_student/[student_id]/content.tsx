@@ -100,7 +100,7 @@ function CourseRow({ course, facultyList, modifyApplication }: { course: CourseA
       <StyledTableCell>{course.course_code} </StyledTableCell>
       <StyledTableCell>{course.aus_course}</StyledTableCell>
       <StyledTableCell>
-        {isEditing
+        {isEditing && course.approved_status === null
           ? <TextField value={assignedTo} onChange={(event) => setAssignedTo(event.target.value)} />
           : assignedTo
         }

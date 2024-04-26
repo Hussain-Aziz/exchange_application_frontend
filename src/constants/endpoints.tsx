@@ -5,6 +5,7 @@ export const loginEndpoint = baseEndpoint + 'login/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
 export const startApplicationEndpoint = baseEndpoint + 'student/start_application/'
 export const listCoursesEndpoint = baseEndpoint + 'student/courses/'
+export const submitApplicationEndpoint = baseEndpoint + 'student/submit_application/'
 
 export const availableApprovalsEnpoint = baseEndpoint + 'faculty/available_approvals/'
 export const availableSyllabusEndpoint = baseEndpoint + 'faculty/available_syllabus/'
@@ -16,6 +17,8 @@ export const comparisonEndpoint = baseEndpoint + 'users/compare_application/'
 export const facultListEndpoint = baseEndpoint + 'ixo/faculty/'
 export const studentListEnpoint = baseEndpoint + 'ixo/student/'
 export const studentCourseListEnpoint = baseEndpoint + 'ixo/courses/'
+export const newApplicationEndpoint = baseEndpoint + 'ixo/new_application/'
+export const finalApprovalEndpoint = baseEndpoint + 'ixo/final_approval/'
 
 export function getHeaders(cookies: ReadonlyRequestCookies) {
   const token_cookie = cookies.get('token')
