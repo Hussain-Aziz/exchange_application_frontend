@@ -5,7 +5,7 @@ import ConfirmDialog from '../../../components/ConfirmDialog';
 import { ApplicationState } from './page';
 import { useRouter } from 'next/navigation';
 
-export default function StudentHomeContent({ applicationState, logout }: { applicationState: ApplicationState, logout: () => void }) {
+export default function StudentHomeContent({ applicationState, logout, withdrawApplication }: { applicationState: ApplicationState, logout: () => void, withdrawApplication: () => void}) {
   const [cancelDialogOpen, setCancelDialogOpen] = React.useState(false);
   const [submitCoursesDialogOpen, setSubmitCoursesDialogOpen] = React.useState(false);
   const router = useRouter()
@@ -13,6 +13,11 @@ export default function StudentHomeContent({ applicationState, logout }: { appli
   const submitCourses = () => {
     //TODO
     console.log('submit courses')
+  }
+
+  const withdraw = () => {
+    //TODO
+    console.log('withdraw')
   }
 
   const fullLogout = () => {
@@ -44,7 +49,7 @@ export default function StudentHomeContent({ applicationState, logout }: { appli
       <HomePageButton onClick={fullLogout} label='Logout'/>
       <div>
         <ConfirmDialog action='submit courses' open={submitCoursesDialogOpen} setOpen={setSubmitCoursesDialogOpen} onConfirm={submitCourses} />
-        <ConfirmDialog action='cancel' open={cancelDialogOpen} setOpen={setCancelDialogOpen} />
+        <ConfirmDialog action='cancel' open={cancelDialogOpen} setOpen={setCancelDialogOpen} onConfirm={withdraw} />
       </div>
     </>
   )

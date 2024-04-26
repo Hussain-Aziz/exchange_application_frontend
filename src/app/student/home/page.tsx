@@ -10,6 +10,18 @@ export default async function Page() {
     cookies().delete('user')
   }
 
+  const withdrawApplication = async () => {
+    "use server"
+    const withdrawRequest = await fetch(applicationInfoEndpoint, {
+      method: 'DELETE',
+      headers: getHeaders(cookies())
+    })
+
+    if (withdrawRequest.status === 200) {
+      logout()
+    }
+  }
+
   const applicationDataRequest = await fetch(applicationInfoEndpoint, {
     method: 'GET',
     headers: getHeaders(cookies())
@@ -21,7 +33,7 @@ export default async function Page() {
   if (applicationData.aus_id === null) applicationState = "NOT_STARTED"
   else applicationState = "ADDING_COURSES"
 
-  return <StudentHomeContent applicationState={applicationState} logout={logout} />
+  return <StudentHomeContent applicationState={applicationState} logout={logout} withdrawApplication={withdrawApplication} />
 
 
 }
