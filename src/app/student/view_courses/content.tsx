@@ -16,7 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CommentIcon from '@mui/icons-material/Comment';
 import { styled } from '@mui/system';
-import { createStyledTableCell, createStyledTableRow } from "@/components/StyledTableComponents";
+import { createStyledTableCell, createStyledTableRow } from '../../../components/StyledTableComponents'
 
 
 export default function CoursesContent({ courses, cancelApplication }: { courses: CourseApplication[], cancelApplication: (id: number) => void }) {

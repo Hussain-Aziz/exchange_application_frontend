@@ -173,7 +173,6 @@ export default function CourseRequestContent({ course_data, submitToBackend, get
                   key={course_data.course_application_id}
                   id={course_data.course_application_id}
                   comparison_result={course_data.comparison_result}
-                  running_comparison={course_data.running_comparison}
                   get_comparison_result={get_comparison_result}
                 />
                 : <RawPdf

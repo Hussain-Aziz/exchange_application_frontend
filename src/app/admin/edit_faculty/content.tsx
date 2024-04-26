@@ -24,7 +24,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import { styled } from '@mui/system';
-import { createStyledTableCell, createStyledTableRow } from "@/components/StyledTableComponents";
+import { createStyledTableCell, createStyledTableRow } from '../../../components/StyledTableComponents'
 
 export default function EditFacultyContent({ facultyList, editFacultyInfo }: { facultyList: Faculty[], editFacultyInfo: any }) {
 

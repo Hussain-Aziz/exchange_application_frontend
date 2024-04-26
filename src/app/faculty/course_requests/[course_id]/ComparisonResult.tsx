@@ -6,14 +6,14 @@ import {
 } from '@mui/material';
 import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 
-export default function ComparisonResult({id, comparison_result, running_comparison, get_comparison_result}: 
-  {id: number, comparison_result: any, running_comparison: boolean, get_comparison_result: (id: number) => Promise<any>}) {
+export default function ComparisonResult({id, comparison_result, get_comparison_result}: 
+  {id: number, comparison_result: any, get_comparison_result: (id: number) => Promise<any>}) {
 
     const [real_comparison_result, setComparisonResult] = useState<any>(comparison_result);
 
     useEffect(() => {
       get_comparison_result(id).then((result) => {setComparisonResult(result)})
-    }, [get_comparison_result, id, running_comparison]);
+    }, [get_comparison_result, id]);
 
     if (real_comparison_result === null || real_comparison_result === undefined) {
       // return loading text

@@ -1,5 +1,4 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
-import { createDecipheriv } from "crypto"
 
 const baseEndpoint = "http://127.0.0.1:8000/"
 export const loginEndpoint = baseEndpoint + 'login/'
@@ -28,15 +27,8 @@ export function getHeaders(cookies: ReadonlyRequestCookies) {
     } as const
   }
   else {
-    const algorithm = process.env.ENCRYPT_ALG || ''
-    const secret_key = process.env.ENCRYPT_KEY || ''
-    const IV = process.env.ENCRYPT_IV || ''
-
-    const decipher = createDecipheriv(algorithm, secret_key, Buffer.from(IV))
-    const real_token = decipher.update(token, 'hex', 'utf8') + decipher.final('utf8')
-
     return {
-      "Authorization": "TOKEN " + real_token,
+      "Authorization": "TOKEN " + token,
       "Content-Type": "application/json"
     } as const
   }

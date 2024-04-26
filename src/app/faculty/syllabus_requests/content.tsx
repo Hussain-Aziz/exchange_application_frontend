@@ -31,7 +31,7 @@ export default function SyllabusRequestSelectionContent({fetchData}: {fetchData:
   );
 }
 
-function CustomTableRow({data}: {data: any}) {
+export function CustomTableRow({data}: {data: any}) {
   const router = useRouter();
 
   const StyledTableRow = styled(TableRow)(createStyledTableRow())

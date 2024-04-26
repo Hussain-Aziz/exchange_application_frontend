@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest'
 import CourseRequestContent from '../content';
+import ComparisonResult from '../ComparisonResult';
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -47,7 +48,13 @@ const course_data = {
   comparison_result: null,
   running_comparison: false,
   delegated_approval: false,
-  university: 1
+  university: 1,
+  comments: "This is a test comment",
+}
+
+const comparison_result ={
+  "CLO 1": "The student will be able to understand the basic concepts of computer architecture and organization.",
+  "match percentage": "100%",
 }
 describe('Page', () => {
   it('renders with hod', () => {
@@ -64,6 +71,23 @@ describe('Page', () => {
       submitToBackend={async (data) => { { } }}
       get_comparison_result={async (data) => { { } }}
       faculty_type={1} />);
+    expect(container).toBeTruthy();
+  });
+
+  it('renders with comparison', () => {
+    const { container } = render(<ComparisonResult 
+    comparison_result={comparison_result}
+    get_comparison_result={async () => comparison_result}
+    id={0}
+    />);
+    expect(container).toBeTruthy();
+  });
+  it('renders with no comparison', () => {
+    const { container } = render(<ComparisonResult 
+    comparison_result={null}
+    get_comparison_result={async () => null}
+    id={0}
+    />);
     expect(container).toBeTruthy();
   });
 });
