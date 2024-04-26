@@ -15,13 +15,13 @@ export interface CourseApplication {
   comparison_result: any
   running_comparison: boolean
   university: number
-  delegated_to : Faculty | null
+  delegated_to : string | null
   delegated_approval: boolean
   comments: string
+  force_approval_to: string | null
 }
 
 export interface Student {
-  id: number
   aus_id: string
   name: string
   phone_num: string
@@ -31,8 +31,12 @@ export interface Student {
   current_standing: string
   host_contact_name: string
   host_contact_email: string
-  user: number
-  university: number
+  user: UserType
+  university: University
+}
+export interface University {
+  university_name: string
+  university_id: number
 }
 
 export interface Faculty {

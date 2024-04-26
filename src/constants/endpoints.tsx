@@ -14,6 +14,8 @@ export const ApproveCourse = baseEndpoint + 'faculty/approve_course/'
 export const comparisonEndpoint = baseEndpoint + 'users/compare_application/'
 
 export const facultListEndpoint = baseEndpoint + 'ixo/faculty/'
+export const studentListEnpoint = baseEndpoint + 'ixo/student/'
+export const studentCourseListEnpoint = baseEndpoint + 'ixo/courses/'
 
 export function getHeaders(cookies: ReadonlyRequestCookies) {
   const token_cookie = cookies.get('token')

@@ -16,7 +16,7 @@ export default function StudentHomeContent({ applicationState, logout, withdrawA
   }
 
   const withdraw = () => {
-    //TODO
+    withdrawApplication()
     console.log('withdraw')
   }
 

@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
 
   if (request.nextUrl.pathname.startsWith('/admin')) {
     url.pathname = '/student/home'
-    //if (!user_data.is_admin) return NextResponse.redirect(url)
+    if (!user_data.is_admin) return NextResponse.redirect(url)
   }  
   if (request.nextUrl.pathname.startsWith('/student')) {
     url.pathname = '/faculty/home'

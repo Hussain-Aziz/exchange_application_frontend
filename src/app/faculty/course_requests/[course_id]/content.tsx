@@ -80,8 +80,8 @@ export default function CourseRequestContent({ course_data, submitToBackend, get
     '13. Computer Literacy',
   ]
 
-  const extraYesText = course_data.delegated_to !== null && course_data.delegated_approval ? ' (Suggested by ' + course_data.delegated_to.user.username + ')' : ''
-  const extraNoText = course_data.delegated_to !== null && !course_data.delegated_approval ? ' (Suggested by ' + course_data.delegated_to.user.username + ')' : ''
+  const extraYesText = course_data.delegated_to !== null && course_data.delegated_approval ? ' (Suggested by ' + course_data.delegated_to + ')' : ''
+  const extraNoText = course_data.delegated_to !== null && !course_data.delegated_approval ? ' (Suggested by ' + course_data.delegated_to + ')' : ''
 
   const validationSchema = Yup.object().shape({
     programArea: Yup.string().when('approved', {
