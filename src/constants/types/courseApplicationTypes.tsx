@@ -15,6 +15,11 @@ export interface CourseApplication {
   comparison_result: any
   running_comparison: boolean
   university: number
+  delegated_to : string | null
+  delegated_approval: boolean
+  comments: string
+  force_approval_to: string | null
+  approved_by: string | null
 }
 
 export interface Student {
@@ -28,6 +33,46 @@ export interface Student {
   current_standing: string
   host_contact_name: string
   host_contact_email: string
-  user: number
-  university: number
+  user: UserType
+  university: University
+  ixo_details: IXODetails
+  submitted_form: boolean
+}
+export interface University {
+  university_name: string
+  university_id: number
+}
+
+export interface Faculty {
+  id: number
+  user: UserType
+  department: number
+  faculty_type: number
+}
+
+export interface UserType {
+  username: string
+  first_name: string
+  last_name: string
+}
+
+export interface IXODetails {
+  initial_approval_id: number
+  moe_approval: boolean
+  usdoe_approval: boolean
+  acreditted: boolean
+  acreditted_comments: string
+  agreement: boolean
+  initial_approval_date: string
+  student_type: string
+  advisor_approval: boolean
+  advisor_approval_date: string
+  associate_dean_approval: boolean
+  associate_dean_approval_date: string
+  scholarship_approval: boolean
+  scholarship_approval_date: string
+  sponsorship_approval: boolean
+  sponsorship_approval_date: string
+  ixo_approval: boolean
+  ixo_approval_date: string
 }

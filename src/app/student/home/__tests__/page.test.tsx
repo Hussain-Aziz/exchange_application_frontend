@@ -17,7 +17,7 @@ vi.mock('next/navigation', () => ({
 
 describe('Page', () => {
   it('renders without crashing', () => {
-    const { container } = render(<StudentHomeContent applicationState='ADDING_COURSES' logout={() => {}}/>);
+    const { container } = render(<StudentHomeContent applicationState='ADDING_COURSES' logout={() => {}} withdrawApplication={() => {}}/>);
     expect(container).toBeTruthy();
   });
 });

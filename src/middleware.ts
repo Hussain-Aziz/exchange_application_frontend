@@ -14,23 +14,30 @@ export function middleware(request: NextRequest) {
 
   const user_data = JSON.parse(user.value)
 
-  // check if student is trying to access faculty page or vice versa
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    url.pathname = user_data.is_faculty ? '/faculty/home' : '/student/home'
+    if (!(user_data.is_admin === true)) return NextResponse.redirect(url)
+  }  
   if (request.nextUrl.pathname.startsWith('/student')) {
-    url.pathname = '/teaching_faculty/home'
-    if (user_data.is_faculty) return NextResponse.redirect(url)
+    url.pathname = user_data.is_admin ? '/admin/home' : '/faculty/home'
+    if (!(user_data.is_faculty === false)) return NextResponse.redirect(url)
   }
-  if (request.nextUrl.pathname.startsWith('/teaching_faculty')) {
-    url.pathname = '/student/home'
-    if (!user_data.is_faculty) return NextResponse.redirect(url)
+  if (request.nextUrl.pathname.startsWith('/faculty')) {
+    url.pathname = user_data.is_admin ? '/admin/home' : '/student/home'
+    if (!(user_data.is_faculty === true)) return NextResponse.redirect(url)
   }
 
-  // check if user is trying to access /student or /teaching_faculty
+  // check if user is trying to access /student or /faculty
   if (request.nextUrl.pathname === '/student') {
     url.pathname = '/student/home'
     return NextResponse.redirect(url)
   }
-  if (request.nextUrl.pathname === '/teaching_faculty') {
-    url.pathname = '/teaching_faculty/home'
+  if (request.nextUrl.pathname === '/faculty') {
+    url.pathname = '/faculty/home'
+    return NextResponse.redirect(url)
+  }
+  if (request.nextUrl.pathname === '/admin') {
+    url.pathname = '/admin/home'
     return NextResponse.redirect(url)
   }
   if (request.nextUrl.pathname === '/' || request.nextUrl.pathname === '') {
@@ -45,6 +52,7 @@ export const config = {
   matcher: [
     '/',
     '/student/:path*',
-    '/teaching_faculty/:path*'
+    '/faculty/:path*',
+    '/admin/:path*',
   ],
 }

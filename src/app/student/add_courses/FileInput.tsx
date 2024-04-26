@@ -10,7 +10,7 @@ import { UploadButton } from '../../../components/fileUpload';
 
 import "./addCourseForm.css"
 
-export default function FileInput({ name, errors, touched }: { name: string, errors: any, touched: any }) {
+export default function FileInput({ name, message }: { name: string, message: string }) {
   const [field, meta, helpers] = useField(name);
   const [fileInfo, setFileInfo] = useState<{fileName: string, fileLink: string}>({fileName: '', fileLink: ''});
   const [error, setError] = useState<string>('');
@@ -18,7 +18,7 @@ export default function FileInput({ name, errors, touched }: { name: string, err
   return (
 
     <Box sx={{ marginBottom: '20px', display: 'flex', flexDirection: 'row',}}>
-      <Typography className="upload-text-margin">Upload Host University Syllabus</Typography>
+      <Typography className="upload-text-margin">{message}</Typography>
       <Box>
       <UploadButton
         endpoint="pdfUploader"
@@ -63,27 +63,3 @@ export default function FileInput({ name, errors, touched }: { name: string, err
 
   )
 }
-
-/*
-{<Box sx={{ marginBottom: '20px' }}>
-      <Button variant="contained" component="label">
-        Upload Host University Syllabus
-        <input
-          type="file"
-          hidden
-          onChange={handleFileChange}
-          accept=".pdf"
-        />
-      </Button>
-      {fileName && (
-        <Typography variant="subtitle1">
-          {fileName}
-        </Typography>
-      )}
-      {(meta.touched && meta.error) || (errors.hostUniversitySyllabus && touched.hostUniversitySyllabus) ? (
-        <Typography color="error">
-          {meta.error || errors.hostUniversitySyllabus}
-        </Typography>
-      ) : null}
-    </Box> }
-*/

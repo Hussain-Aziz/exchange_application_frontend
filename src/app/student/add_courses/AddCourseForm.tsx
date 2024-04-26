@@ -35,7 +35,9 @@ export default function AddCourseForm({ AusCourses, AusSubjects, submitToBackend
       .required('Equivalent Course at AUS is required'),
     hostUniversitySyllabus: Yup.string()
       .required("A host university syllabus is required")
-      .matches(/^(http|https):\/\/[^ "]+$/,"Must be a valid URL")
+      .matches(/^(http|https):\/\/[^ "]+$/,"Must be a valid URL"),
+    ausSyllabus: Yup.string()
+      .matches(/^(http|https):\/\/[^ "]+$/,"Must be a valid URL"),
   });
 
   return (
@@ -62,7 +64,8 @@ export default function AddCourseForm({ AusCourses, AusSubjects, submitToBackend
               <Field variant="filled" size="small" as={TextField} name="hostCouseTitle" label="Course Title at Host University" error={touched.hostCouseTitle && !!errors.hostCouseTitle} helperText={touched.hostCouseTitle && errors.hostCouseTitle} style={{ marginBottom: '20px' }} />
               <Field variant="filled" size="small" as={TextField} name="courseCredits" label="Course Credits" error={touched.courseCredits && !!errors.courseCredits} helperText={touched.courseCredits && errors.courseCredits} style={{ marginBottom: '20px' }} />
               <CourseInput AusCourses={AusCourses} AusSubjects={AusSubjects} errors={errors} touched={touched} />
-              <FileInput name="hostUniversitySyllabus" errors={errors} touched={touched} />
+              <FileInput name="hostUniversitySyllabus" message={"Host University Syllabus"}/>
+              <FileInput name="ausSyllabus" message={"AUS Syllabus (optional)"}/>
               <Button sx={{ alignSelf: 'end', position: 'sticky', bottom: 25 }} variant="contained" type="submit">Submit</Button>
             </Form>
           )}

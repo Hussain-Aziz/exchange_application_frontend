@@ -1,7 +1,6 @@
 import LoginContent from './content';
 import { cookies } from "next/headers";
 import { loginEndpoint } from "../../constants/endpoints";
-import { createCipheriv } from "crypto"
 
 type LoginSuccess = {
   expiry: string,
@@ -9,6 +8,7 @@ type LoginSuccess = {
   user: {
     username: string,
     is_faculty: boolean,
+    is_admin: boolean
   }
 }
 
@@ -30,18 +30,12 @@ export default function Page() {
       const expiry = data.expiry
       const user = data.user
 
-      const algorithm = process.env.ENCRYPT_ALG || ''
-      const secret_key = process.env.ENCRYPT_KEY || ''
-      const IV = process.env.ENCRYPT_IV || ''
-
-      const cipher = createCipheriv(algorithm, secret_key, Buffer.from(IV))
-
-      const new_token = cipher.update(token, 'utf8', 'hex') + cipher.final('hex')
-
-      cookies().set('token', new_token, { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
+      cookies().set('token', token, { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
       cookies().set('user', JSON.stringify(user), { expires: new Date(expiry), secure: true, sameSite: 'strict', httpOnly: true})
 
-      return user.is_faculty ? '/teaching_faculty/home/' : '/student/home/'
+      return user.is_admin ? '/admin/home/' 
+                          : user.is_faculty ? '/faculty/home/' 
+                                            : '/student/home/'
     }
     return (await response.json()).non_field_errors[0]
   }

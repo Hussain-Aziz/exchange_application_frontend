@@ -1,16 +1,26 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
-import { createDecipheriv } from "crypto"
 
-export const baseEndpoint = "https://ec2-16-171-225-90.eu-north-1.compute.amazonaws.com/"
+const baseEndpoint = "http://127.0.0.1:8000/"
 export const loginEndpoint = baseEndpoint + 'login/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
 export const startApplicationEndpoint = baseEndpoint + 'student/start_application/'
 export const listCoursesEndpoint = baseEndpoint + 'student/courses/'
+export const submitApplicationEndpoint = baseEndpoint + 'student/submit_application/'
+
 export const availableApprovalsEnpoint = baseEndpoint + 'faculty/available_approvals/'
 export const availableSyllabusEndpoint = baseEndpoint + 'faculty/available_syllabus/'
 export const UploadSyllabus = baseEndpoint + 'faculty/upload_syllabus/'
 export const ApproveCourse = baseEndpoint + 'faculty/approve_course/'
+export const facultyListStudent = baseEndpoint + 'faculty/list_students/'
+export const facultyApproveForm = baseEndpoint + 'faculty/approve_student/'
+
 export const comparisonEndpoint = baseEndpoint + 'users/compare_application/'
+
+export const facultListEndpoint = baseEndpoint + 'ixo/faculty/'
+export const studentListEnpoint = baseEndpoint + 'ixo/student/'
+export const studentCourseListEnpoint = baseEndpoint + 'ixo/courses/'
+export const newApplicationEndpoint = baseEndpoint + 'ixo/new_application/'
+export const finalApprovalEndpoint = baseEndpoint + 'ixo/final_approval/'
 
 export function getHeaders(cookies: ReadonlyRequestCookies) {
   const token_cookie = cookies.get('token')
@@ -24,15 +34,8 @@ export function getHeaders(cookies: ReadonlyRequestCookies) {
     } as const
   }
   else {
-    const algorithm = process.env.ENCRYPT_ALG || ''
-    const secret_key = process.env.ENCRYPT_KEY || ''
-    const IV = process.env.ENCRYPT_IV || ''
-
-    const decipher = createDecipheriv(algorithm, secret_key, Buffer.from(IV))
-    const real_token = decipher.update(token, 'hex', 'utf8') + decipher.final('utf8')
-
     return {
-      "Authorization": "TOKEN " + real_token,
+      "Authorization": "TOKEN " + token,
       "Content-Type": "application/json"
     } as const
   }
