@@ -19,6 +19,8 @@ export default function ViewForm({ student, courses }: { student: Student, cours
           <Typography variant="body1">Phone Number: {student.phone_num}</Typography>
           <Typography variant="body1">Present Major: {student.present_major}</Typography>
           <Typography variant="body1">Current Standing: {student.current_standing}</Typography>
+          <Typography variant="body1">Advisor Approval: {student.ixo_details.advisor_approval ? 'Yes' : 'No'}</Typography>
+          <Typography variant="body1">Associate Dean Approval: {student.ixo_details.associate_dean_approval ? 'Yes' : 'No'}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body1">University: {student.university.university_name}</Typography>
@@ -26,6 +28,8 @@ export default function ViewForm({ student, courses }: { student: Student, cours
           <Typography variant="body1">Present College: {student.present_college}</Typography>
           <Typography variant="body1">Host Contact Name: {student.host_contact_name}</Typography>
           <Typography variant="body1">Host Contact Email: {student.host_contact_email}</Typography>
+          <Typography variant="body1">Scholarship Approval: {student.ixo_details.scholarship_approval ? 'Yes' : 'No'}</Typography>
+          <Typography variant="body1">Sponsorship Approval: {student.ixo_details.sponsorship_approval ? 'Yes' : 'No'}</Typography>
         </Grid>
       </Grid>
 
