@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest'
-import ViewStudentContent from '../content'; '../content';
+import ViewStudentContent from '../content';import { CourseApplication } from '@/constants/types/courseApplicationTypes';
+ '../content';
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -14,7 +15,7 @@ vi.mock('next/navigation', () => ({
     get: vi.fn(),
   }),
 }));
-const course_data = {
+const course_data: CourseApplication = {
   course_application_id: 6,
   student: {
     id: 1,
@@ -32,7 +33,16 @@ const course_data = {
       first_name: "Hussain",
       last_name: "Saif",
     },
-    university: 1
+    university: {
+      university_name: "Purdue University",
+      university_id: 1,
+    },
+    ixo_details: {
+      initial_approval_id: 1,
+      advisor_approval: true,
+      associate_dean_approval: true,
+      ixo_approval: true,
+    },
   },
   delegated_to: null,
   course_code: "Cs 27100",
@@ -51,7 +61,8 @@ const course_data = {
   delegated_approval: false,
   university: 1,
   comments: "This is a test comment",
-  force_approval_to: "Jamie"
+  force_approval_to: "Jamie",
+  approved_by:"Jamie"
 }
 const faculty = {
   id: 1,
@@ -80,7 +91,16 @@ const student = {
     first_name: "Hussain",
     last_name: "Saif",
   },
-  university: 1
+  university: {
+    university_name: "Purdue University",
+    university_id: 1,
+  },
+  ixo_details: {
+    initial_approval_id: 1,
+    advisor_approval: true,
+    associate_dean_approval: true,
+    ixo_approval: true,
+  },
 }
 
 describe('Page', () => {

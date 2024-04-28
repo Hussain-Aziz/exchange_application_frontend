@@ -5,7 +5,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from "next/navigation";
 import { CourseApplication, Student } from "@/constants/types/courseApplicationTypes";
-import ViewForm from "@/components/viewForm";
+import ViewForm from "../../../../components/viewForm";
 
 export default function ApproveFormContent({ student, courses, submitToBackend }: { student: Student, submitToBackend: (data: any) => Promise<void>, courses: CourseApplication[]}) {
   const router = useRouter();
