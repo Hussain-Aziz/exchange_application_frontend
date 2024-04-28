@@ -1,7 +1,7 @@
 import { applicationInfoEndpoint, getHeaders } from "../../../constants/endpoints";
 import { cookies } from "next/headers";
 import { Student } from "../../../constants/types/courseApplicationTypes";
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 export default async function Page() {
   const applicationDataRequest = await fetch(applicationInfoEndpoint, {
@@ -34,6 +34,12 @@ export default async function Page() {
     <Typography variant="h6">
       {extraInfo}
     </Typography>
+    {applicationState === "Waiting for form approvals: " &&
+    <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+    <Button sx={{alignSelf: 'start'}} variant="contained">Request approval from Scholarship</Button>
+    <Button sx={{alignSelf: 'start'}} variant="contained">Request approval from Sponsorship</Button>
+    </div>
+    }
     </>
   );
 }
