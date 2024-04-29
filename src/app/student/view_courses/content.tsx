@@ -71,7 +71,7 @@ function CourseRow({ course, cancelApplication }: { course: CourseApplication, c
         {course.approved_status === null &&
           <IconButton onClick={() => {
             cancelApplication(course.course_application_id)
-            location.reload()
+            window.location.reload()
           }}>
             <DeleteIcon />
           </IconButton>
