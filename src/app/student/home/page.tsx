@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import StudentHomeContent from './content';
-import { applicationInfoEndpoint, submitApplicationEndpoint, getHeaders } from '../../../constants/endpoints';
+import { applicationInfoEndpoint, submitApplicationEndpoint, getHeaders, startApplicationEndpoint } from '../../../constants/endpoints';
 import { Student } from '@/constants/types/courseApplicationTypes';
 import { a } from 'vitest/dist/suite-ghspeorC.js';
 
@@ -14,7 +14,7 @@ export default async function Page() {
 
   const withdrawApplication = async () => {
     "use server"
-    const withdrawRequest = await fetch(applicationInfoEndpoint, {
+    const withdrawRequest = await fetch(startApplicationEndpoint, {
       method: 'DELETE',
       headers: getHeaders(cookies())
     })

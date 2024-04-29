@@ -1,4 +1,4 @@
-import { getHeaders, listCoursesEndpoint, submitApplicationEndpoint } from "../../../constants/endpoints";
+import { getHeaders, listCoursesEndpoint } from "../../../constants/endpoints";
 import { cookies } from 'next/headers';
 import CoursesContent from './content';
 import { revalidatePath } from 'next/cache';
@@ -14,7 +14,7 @@ export default async function Page() {
 
   const cancelApplication = async (id: number) => {
     "use server"
-    const response = await fetch(submitApplicationEndpoint, {
+    const response = await fetch(listCoursesEndpoint, {
       method: 'DELETE',
       headers: getHeaders(cookies()),
       body: JSON.stringify({ 'id': id })
