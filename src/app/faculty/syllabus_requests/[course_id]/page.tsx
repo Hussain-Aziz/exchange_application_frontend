@@ -1,5 +1,5 @@
 import SyllabusRequestsContent from './content';
-import { availableSyllabusEndpoint, UploadSyllabus, getHeaders } from '../../../../constants/endpoints';
+import { availableSyllabusEndpoint, UploadSyllabus, getHeaders, comparisonEndpoint } from '../../../../constants/endpoints';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -17,7 +17,16 @@ export default async function Page({params}: {params: {course_id: string}}) {
       method: 'POST',
       headers: getHeaders(cookies()),
       body: JSON.stringify(data)
-    })
+    }).then(response => response.json())
+
+    setTimeout(() => 
+      {
+        console.log("LMAO4")
+        fetch(`${comparisonEndpoint}?id=${response.id}`, {
+      method: 'GET',
+      headers: getHeaders(cookies())
+    }).then(response => response.json())}, 1000);
+    
     revalidatePath('/faculty/syllabus_requests')
     redirect('/faculty/syllabus_requests')
   }

@@ -1,6 +1,6 @@
 import AddCourseForm from './AddCourseForm';
 import { getAUSCoursesList } from './CoursesList'
-import { listCoursesEndpoint, getHeaders } from '../../../constants/endpoints';
+import { listCoursesEndpoint, getHeaders, comparisonEndpoint } from '../../../constants/endpoints';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 
@@ -16,7 +16,15 @@ export default async function Page() {
       method: 'POST',
       headers: getHeaders(cookies()),
       body: JSON.stringify(data)
-    })
+    }).then(response => response.json())
+    setTimeout(() => 
+      {
+        console.log("LMAO4")
+        fetch(`${comparisonEndpoint}?id=${response.id}`, {
+      method: 'GET',
+      headers: getHeaders(cookies())
+    }).then(response => response.json())}, 1000);
+  
     revalidatePath('/student/view_courses')
   }
 
