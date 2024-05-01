@@ -10,10 +10,27 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { UploadButton } from '../../../../components/fileUpload';
+import './courseRequest.css'
 
-export default function SyllabusRequestsContent({ syllabus, sendToBackend }: { syllabus: string, sendToBackend: (data: any) => void}) {
+const IgnoreButton = ({ submitToBackend }: { submitToBackend: (data: any) => Promise<void> }) => {
+  const router = useRouter()
+
+  const saveValues = async () => {
+    const v = {
+      ignore_aus_syllabus: true
+    }
+    await submitToBackend(v)
+    router.push('/faculty/course_requests')
+  }
+  return (
+    <Button variant="contained" onClick={saveValues}>Ignore</Button>
+
+  )
+}
+
+export default function SyllabusRequestsContent({ syllabus, sendToBackend }: { syllabus: string, sendToBackend: (data: any) => Promise<void>  }) {
   const router = useRouter();
-  const [fileInfo, setFileInfo] = useState<{fileName: string, fileLink: string}>({fileName: '', fileLink: ''});
+  const [fileInfo, setFileInfo] = useState<{ fileName: string, fileLink: string }>({ fileName: '', fileLink: '' });
   const [error, setError] = useState<string>('');
 
   const submit = () => {
@@ -22,14 +39,14 @@ export default function SyllabusRequestsContent({ syllabus, sendToBackend }: { s
       return;
     }
 
-    sendToBackend({syllabus: fileInfo.fileLink});
+    sendToBackend({ syllabus: fileInfo.fileLink });
 
     router.push('/faculty/syllabus_requests/');
   }
 
   return (
     <Grid container className="full-screen" sx={{ overflowY: 'auto' }}>
-      <Grid item xs={10} sx={{display: 'flex', flexDirection: 'column'}}>
+      <Grid item xs={10} sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography variant="h5" sx={{ marginBottom: '20px' }}>Syllabus Upload</Typography>
         <Box sx={{ marginBottom: '20px' }}>
           <UploadButton
@@ -42,18 +59,18 @@ export default function SyllabusRequestsContent({ syllabus, sendToBackend }: { s
               },
               container({ ready, isUploading }) {
                 return {
-                  display:'block',
+                  display: 'block',
                   marginLeft: '5px',
                 }
               }
             }}
             onClientUploadComplete={(res) => {
-              setFileInfo({fileName: res[0].name, fileLink: res[0].url});
+              setFileInfo({ fileName: res[0].name, fileLink: res[0].url });
               setError('');
             }}
             onUploadError={(error: Error) => {
               setError(error.message);
-              setFileInfo({fileName: '', fileLink: ''});
+              setFileInfo({ fileName: '', fileLink: '' });
             }}
           />
           {fileInfo.fileLink !== '' && (
@@ -71,7 +88,10 @@ export default function SyllabusRequestsContent({ syllabus, sendToBackend }: { s
         </Box>
         <Typography variant="h6" sx={{ marginBottom: '20px' }}>Host University Syllabus</Typography>
         <ViewPdf link={syllabus} height={'300px'} />
-        <Button sx={{ alignSelf: 'end', position: 'sticky', bottom: 25 }} variant="contained" onClick={submit}>Submit</Button>
+        <div className='SaveSubmitContainer'>
+          <IgnoreButton submitToBackend={sendToBackend} />
+          <Button variant="contained" onClick={submit}>Submit</Button>
+        </div>
       </Grid>
     </Grid>
   );

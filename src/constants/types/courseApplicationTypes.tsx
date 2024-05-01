@@ -19,7 +19,8 @@ export interface CourseApplication {
   delegated_approval: boolean
   comments: string
   force_approval_to: string | null
-  approved_by: string | null
+  approved_by: string | null,
+  ignore_aus_syllabus: boolean,
 }
 
 export interface Student {

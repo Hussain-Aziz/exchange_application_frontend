@@ -20,11 +20,10 @@ export default async function Page({params}: {params: {course_id: string}}) {
     }).then(response => response.json())
 
     setTimeout(() => 
-      {
-        console.log("LMAO4")
-        fetch(`${comparisonEndpoint}?id=${response.id}`, {
-      method: 'GET',
-      headers: getHeaders(cookies())
+    {
+      fetch(`${comparisonEndpoint}?id=${response.id}`, {
+        method: 'GET',
+        headers: getHeaders(cookies())
     }).then(response => response.json())}, 1000);
     
     revalidatePath('/faculty/syllabus_requests')

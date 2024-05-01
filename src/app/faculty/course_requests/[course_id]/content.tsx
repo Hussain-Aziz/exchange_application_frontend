@@ -26,11 +26,11 @@ import DelegateDialog from './DelegateDialog';
 const DelegateButton = ({ submitToBackend }: { submitToBackend: (data: any) => Promise<void> }) => {
   const router = useRouter()
   const { values } = useFormikContext();
-  const saveValues = (email: string) => {
+  const saveValues = async (email: string) => {
     const v = values as any
     const values_with_delegate = { ...v, delegate: email }
     delete values_with_delegate.approved;
-    submitToBackend(values_with_delegate)
+    await submitToBackend(values_with_delegate)
     router.push('/faculty/course_requests')
   }
 
@@ -47,10 +47,10 @@ const DelegateButton = ({ submitToBackend }: { submitToBackend: (data: any) => P
 const SaveButton = ({ submitToBackend }: { submitToBackend: (data: any) => Promise<void> }) => {
   const router = useRouter()
   const { values } = useFormikContext();
-  const saveValues = () => {
+  const saveValues = async () => {
     const v = values as any
     delete v.approved;
-    submitToBackend(v)
+    await submitToBackend(v)
     router.push('/faculty/course_requests')
   }
   return (
@@ -127,8 +127,8 @@ export default function CourseRequestContent({ course_data, submitToBackend, get
             comments: course_data.comments || undefined,
           }}
           validationSchema={validationSchema}
-          onSubmit={values => {
-            submitToBackend(values);
+          onSubmit={async values => {
+            await submitToBackend(values);
             router.push('/faculty/course_requests')
           }}
         >
@@ -166,12 +166,14 @@ export default function CourseRequestContent({ course_data, submitToBackend, get
                   <MenuItem value={'false'}>{'No' + extraNoText}</MenuItem>
                 </Field>
               </FormControl>
+              { !course_data.ignore_aus_syllabus &&
               <Button
                 variant="contained"
                 onClick={() => setShowComparison(p => !p)}
                 sx={{ alignSelf: 'center', marginBottom: '10px' }}>
                 {showComparison ? 'Show Syllabus' : 'Show Comparison'}
               </Button>
+              }
               {showComparison
                 ? <ComparisonResult
                   key={course_data.course_application_id}
@@ -216,8 +218,8 @@ function CourseRequestContent_TF({ course_data, submitToBackend, get_comparison_
             approved: course_data.delegated_approval || undefined,
           }}
           validationSchema={validationSchema}
-          onSubmit={values => {
-            submitToBackend(values);
+          onSubmit={async values => {
+            await submitToBackend(values);
             router.push('/faculty/course_requests')
           }}
         >
