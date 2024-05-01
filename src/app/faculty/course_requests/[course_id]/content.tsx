@@ -29,6 +29,7 @@ const DelegateButton = ({ submitToBackend }: { submitToBackend: (data: any) => P
   const saveValues = (email: string) => {
     const v = values as any
     const values_with_delegate = { ...v, delegate: email }
+    delete values_with_delegate.approved;
     submitToBackend(values_with_delegate)
     router.push('/faculty/course_requests')
   }
@@ -47,7 +48,9 @@ const SaveButton = ({ submitToBackend }: { submitToBackend: (data: any) => Promi
   const router = useRouter()
   const { values } = useFormikContext();
   const saveValues = () => {
-    submitToBackend(values)
+    const v = values as any
+    delete v.approved;
+    submitToBackend(v)
     router.push('/faculty/course_requests')
   }
   return (
