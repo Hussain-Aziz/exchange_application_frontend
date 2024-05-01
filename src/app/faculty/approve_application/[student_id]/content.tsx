@@ -11,17 +11,22 @@ export default function ApproveFormContent({ student, courses, submitToBackend }
   const router = useRouter();
 
   const validationSchema = Yup.object().shape({
-    approved: Yup.boolean()
-      .required('Approval is required'),
+    approved: Yup.boolean().required(),
+    comments: Yup.string().when('approved', {
+      is: false,
+      then: schema => schema.required('Comment is required'),
+      otherwise: schema => schema,
+    })
   });
 
   return (
     <Grid container className="full-screen" sx={{ overflowY: 'auto' }}>
       <Grid item xs={11}>
-        <Typography variant="h5" sx={{ marginBottom: '20px' }}>IXO Approval</Typography>
+        <Typography variant="h5" sx={{ marginBottom: '20px' }}>Form Approval</Typography>
         <Formik
           initialValues={{
             approved: undefined,
+            comments: '',
           }}
           validationSchema={validationSchema}
           onSubmit={async (values) => {
@@ -29,7 +34,7 @@ export default function ApproveFormContent({ student, courses, submitToBackend }
             router.push('/faculty/home/')
           }}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, values }) => (
             <Form style={{ display: 'flex', flexDirection: 'column', marginRight: '20px', marginBottom: '20px', paddingBottom: '20px' }}>
 
               <FormControl variant="filled" size="small" style={{ marginBottom: '20px' }}>
@@ -39,7 +44,9 @@ export default function ApproveFormContent({ student, courses, submitToBackend }
                   <MenuItem value={'false'}>No</MenuItem>
                 </Field>
               </FormControl>
-
+              {values.approved === 'false' &&
+              <Field variant="filled" size="small" as={TextField} name="comments" label="Comments" error={touched.comments && !!errors.comments} helperText={touched.comments && errors.comments} style={{ marginBottom: '20px' }} />
+              }
               <Button sx={{ alignSelf: 'end', position: 'sticky', bottom: 25 }} variant="contained" type="submit">Submit</Button>
             </Form>
           )}
