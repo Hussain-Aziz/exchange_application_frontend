@@ -1,8 +1,9 @@
-import { applicationInfoEndpoint, getHeaders, submitApplicationEndpoint } from "../../../constants/endpoints";
+import { applicationInfoEndpoint, getHeaders, submitApplicationEndpoint, listCoursesEndpoint } from "../../../constants/endpoints";
 import { cookies } from "next/headers";
-import { Student } from "../../../constants/types/courseApplicationTypes";
-import { Button, Typography } from '@mui/material';
+import { CourseApplication, Student } from "../../../constants/types/courseApplicationTypes";
+import { Button, Grid, Typography } from '@mui/material';
 import StatusContent from "./content";
+import ViewForm from "@/components/viewForm";
 
 export default async function Page() {
   const applicationDataRequest = await fetch(applicationInfoEndpoint, {
@@ -37,6 +38,16 @@ export default async function Page() {
     })
   }
 
+  let courses: any = []
+
+  if (applicationState === "Form Approved.") {
+    const course_request = await fetch(`${listCoursesEndpoint}`, {
+      method: 'GET',
+      headers: getHeaders(cookies())
+    })
+    courses = await course_request.json() as CourseApplication[]
+  }
+
   return (<>
     <Typography variant="h5">
       {`Current Status: ${applicationState}`}
@@ -45,10 +56,17 @@ export default async function Page() {
       {extraInfo}
     </Typography>
     {applicationState === "Waiting for form approvals: " &&
-    <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-      <StatusContent makeRequest={makeRequest} student={student}/>
-    </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <StatusContent makeRequest={makeRequest} student={student} />
+      </div>
     }
-    </>
+    {applicationState === "Form Approved." &&
+      <Grid container className="full-screen" sx={{ overflowY: 'auto' }}>
+        <Grid item xs={11}>
+          <ViewForm student={student} courses={courses} />
+        </Grid>
+      </Grid>
+    }
+  </>
   );
 }

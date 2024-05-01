@@ -35,11 +35,14 @@ export default function StudentHomeContent({ applicationState, logout, withdrawA
       <>
       <HomePageButton onClick={'/student/add_courses'} label='Add Courses' />
       <HomePageButton onClick={'/student/view_courses'} label='View Submitted Courses' />
-      <HomePageButton onClick={() => setSubmitCoursesDialogOpen(true)} label='Submit Form' />
       </>
       }
+      {
+        applicationState === "ADDING_COURSES" &&
+        <HomePageButton onClick={() => setSubmitCoursesDialogOpen(true)} label='Submit Form' />
+      }
 
-      {(applicationState === "WAITING_INITIAL_APPROVAL" || applicationState === "WAITING_SIGNATURES") &&
+      {(applicationState === "WAITING_INITIAL_APPROVAL" || applicationState === "WAITING_SIGNATURES" || applicationState === "APPROVED") &&
       <HomePageButton onClick={'/student/status'} label='Check Application Status'/>
       }
 
