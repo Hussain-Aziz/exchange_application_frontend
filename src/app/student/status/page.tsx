@@ -1,7 +1,8 @@
-import { applicationInfoEndpoint, getHeaders } from "../../../constants/endpoints";
+import { applicationInfoEndpoint, getHeaders, submitApplicationEndpoint } from "../../../constants/endpoints";
 import { cookies } from "next/headers";
 import { Student } from "../../../constants/types/courseApplicationTypes";
 import { Button, Typography } from '@mui/material';
+import StatusContent from "./content";
 
 export default async function Page() {
   const applicationDataRequest = await fetch(applicationInfoEndpoint, {
@@ -9,22 +10,31 @@ export default async function Page() {
     headers: getHeaders(cookies())
   })
 
-  const applicationData = await applicationDataRequest.json() as Student
+  const student = await applicationDataRequest.json() as Student
 
   let applicationState = undefined
   let extraInfo = ""
-  if (applicationData.aus_id === null) applicationState = "Not Started"
-  else if (applicationData.ixo_details === null) applicationState = "Waiting for initial approval from exchange office"
-  else if (!applicationData.submitted_form) applicationState = "Adding Courses"
-  else if (!applicationData.ixo_details.advisor_approval || !applicationData.ixo_details.associate_dean_approval || !applicationData.ixo_details.ixo_approval) {
+  if (student.aus_id === null) applicationState = "Not Started"
+  else if (student.ixo_details === null) applicationState = "Waiting for initial approval from exchange office"
+  else if (!student.submitted_form) applicationState = "Adding Courses"
+  else if (!student.ixo_details.advisor_approval || !student.ixo_details.associate_dean_approval || !student.ixo_details.ixo_approval) {
     applicationState = "Waiting for form approvals: "
-    extraInfo += "Advisor " + (!applicationData.ixo_details.advisor_approval ? "(Not Approved), " : "(Approved), ")
-    extraInfo += "Associate Dean " + (!applicationData.ixo_details.associate_dean_approval ? "(Not Approved), " : "(Approved), ")
-    extraInfo += "IXO " + (!applicationData.ixo_details.ixo_approval ? "(Not Approved)" : "(Approved)")
+    extraInfo += "Advisor " + (!student.ixo_details.advisor_approval ? "(Not Approved), " : "(Approved), ")
+    extraInfo += "Associate Dean " + (!student.ixo_details.associate_dean_approval ? "(Not Approved), " : "(Approved), ")
+    extraInfo += "IXO " + (!student.ixo_details.ixo_approval ? "(Not Approved)" : "(Approved)")
   }
   else {
     applicationState = "Form Approved."
-    extraInfo = "Enjoy your exchange at " + applicationData.university.university_name + "!"
+    extraInfo = "Enjoy your exchange at " + student.university.university_name + "!"
+  }
+
+  const makeRequest = async (data: any) => {
+    "use server"
+    const response = await fetch(submitApplicationEndpoint, {
+      method: 'POST',
+      headers: getHeaders(cookies()),
+      body: JSON.stringify(data)
+    })
   }
 
   return (<>
@@ -36,8 +46,7 @@ export default async function Page() {
     </Typography>
     {applicationState === "Waiting for form approvals: " &&
     <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-    <Button sx={{alignSelf: 'start'}} variant="contained">Request approval from Scholarship</Button>
-    <Button sx={{alignSelf: 'start'}} variant="contained">Request approval from Sponsorship</Button>
+      <StatusContent makeRequest={makeRequest} student={student}/>
     </div>
     }
     </>
