@@ -20,6 +20,15 @@ cd exchange_application_frontend
 npm install --no-fund --no-audit
 ```
 
+### Environment variables
+
+The app requires the following environment variables to be set (in an .env.local file in the root dir)
+
+```bash
+UPLOADTHING_SECRET
+UPLOADTHING_APP_ID
+```
+
 ### Running the application
 
 1. Open vscode and open the project folder
