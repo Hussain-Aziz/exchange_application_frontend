@@ -43,8 +43,11 @@ export default function LoginContent({ login }: { login: (username: string, pass
       } else {
         const nextPage = await login(username, password)
 
-        if (nextPage.startsWith('/'))
-          router.push(nextPage)
+        if (nextPage.startsWith('/')) {
+          const next = new URLSearchParams(location.search).get('next')
+          if (next) router.push(next)
+          else router.push(nextPage)
+        }
         else
           setAlertInfo({ severity: "error", message: nextPage })
       }

@@ -9,6 +9,7 @@ export function middleware(request: NextRequest) {
 
   if (!user) {
     url.pathname = '/login'
+    url.searchParams.set('next', request.nextUrl.pathname)
     return NextResponse.redirect(url)
   }
 
