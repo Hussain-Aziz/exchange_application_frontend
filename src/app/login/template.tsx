@@ -12,7 +12,7 @@ export default function LoginLayout(props: {children:React.ReactNode}): React.Re
     return (
         <Grid container className="full-screen">
             <Zoom in={true}>
-            <Grid item xs={12} md={6} className="login-background">
+            <Grid item xs={12} md={6} className="login-background" sx={{overflowY: 'auto'}}>
                 <div className="horizontal-center-container">
                     <Stack spacing={4} marginTop={6} className="center-flex">
                         <Image src='/logo.png' width={100} height={100} alt="logo" className="login-logo-image" />

@@ -2,6 +2,7 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 
 const baseEndpoint = "http://127.0.0.1:8000/"
 export const loginEndpoint = baseEndpoint + 'login/'
+export const registerEndpoint = baseEndpoint + 'register/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
 export const startApplicationEndpoint = baseEndpoint + 'student/start_application/'
 export const listCoursesEndpoint = baseEndpoint + 'student/courses/'

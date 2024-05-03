@@ -1,5 +1,5 @@
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import Page from '../page';
+import Page from '../content';
 import { describe, expect, test, vi } from 'vitest'
 
 vi.mock('next/navigation', () => ({
