@@ -1,16 +1,11 @@
 'use client';
 import { useRouter } from 'next/navigation'
 import HomePageButton from '../../../components/HomePageButton'
-export default function FacultyHomeContent({logout, faculty_type}: {logout: () => void, faculty_type: number}){
+export default function FacultyHomeContent({faculty_type}: {faculty_type: number}){
 
   const router = useRouter()
 
   const type = getFacultyType(faculty_type)
-
-  const fullLogout = () => {
-    logout()
-    router.push('/login')
-  }
 
   return (
     <>
@@ -24,7 +19,6 @@ export default function FacultyHomeContent({logout, faculty_type}: {logout: () =
       {(type == 'Advisor' || type == 'Associate Dean' || type == 'Scholarship' || type == 'Sponsorship') &&
         <HomePageButton onClick={'/faculty/approve_application'} label='Approve Applications' numIndicators={2} />
       }
-      <HomePageButton onClick={fullLogout} label='Logout'/>
     </>
   )
 }

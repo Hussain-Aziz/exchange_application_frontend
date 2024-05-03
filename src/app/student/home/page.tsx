@@ -2,7 +2,6 @@ import { cookies } from 'next/headers'
 import StudentHomeContent from './content';
 import { applicationInfoEndpoint, submitApplicationEndpoint, getHeaders, startApplicationEndpoint } from '../../../constants/endpoints';
 import { Student } from '@/constants/types/courseApplicationTypes';
-import { a } from 'vitest/dist/suite-ghspeorC.js';
 
 export default async function Page() {
 

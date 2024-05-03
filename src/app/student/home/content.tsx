@@ -48,8 +48,7 @@ export default function StudentHomeContent({ applicationState, logout, withdrawA
 
       {applicationState !== "NOT_STARTED" &&
         <HomePageButton onClick={() => setCancelDialogOpen(true)} label='Withdraw Application'/>
-      }
-      <HomePageButton onClick={fullLogout} label='Logout'/>
+      } 
       <div>
         <ConfirmDialog action='submit courses' open={submitCoursesDialogOpen} setOpen={setSubmitCoursesDialogOpen} onConfirm={submitCourses} />
         <ConfirmDialog action='cancel' open={cancelDialogOpen} setOpen={setCancelDialogOpen} onConfirm={withdraw} />
