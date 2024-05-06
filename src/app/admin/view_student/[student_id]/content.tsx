@@ -20,10 +20,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import { styled } from '@mui/system';
 import { CourseApplication, Faculty, Student } from '../../../../constants/types/courseApplicationTypes';
 import { createStyledTableCell, createStyledTableRow } from '../../../../components/StyledTableComponents'
+import ViewForm from '@/components/viewForm';
 
 export default function ViewStudentContent({ student, courses, facultyList, modifyApplication }: { student: Student, courses: CourseApplication[], facultyList: Faculty[], modifyApplication: (course: any) => void }) {
   const columns = ["Course", "AUS Course", "Assigned to", "Status", ""]
   const StyledTableCell:any = useMemo(() => styled(TableCell)(createStyledTableCell()), []);
+
+  if (student.submitted_form && student.ixo_details.ixo_approval) {
+    return (
+    <Box style={{ overflow: 'auto', marginBottom: '20px', marginRight: '20px' }}>
+    <ViewForm courses={courses} student={student}  />
+    </Box>
+    )
+  }
 
   return (
     <Box style={{ overflow: 'auto', maxHeight: '500px', marginBottom: '20px', marginRight: '20px' }}>
@@ -81,18 +90,21 @@ function CourseRow({ course, facultyList, modifyApplication }: { course: CourseA
 
   const dbAssignedToValue = course.force_approval_to || facultyList.find(faculty => faculty.faculty_type == 2 && faculty.department == course.department)?.user.username
 
-  const [assignedTo, setAssignedTo] = React.useState(dbAssignedToValue)
+  const iref = React.useRef<HTMLInputElement>(null)
 
   const [isEditing, setIsEditing] = React.useState(false)
 
   const onSaveClick = () => {
     setIsEditing(false)
-    if (assignedTo !== dbAssignedToValue) {
+    if (iref.current?.value !== dbAssignedToValue) {
       modifyApplication({
         id: course.course_application_id,
-        assignedTo: assignedTo,
+        assignedTo: iref.current?.value,
       })
     }
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000)
   }
 
 
@@ -105,8 +117,8 @@ function CourseRow({ course, facultyList, modifyApplication }: { course: CourseA
       <StyledTableCell>{course.aus_course}</StyledTableCell>
       <StyledTableCell>
         {isEditing && course.approved_status === null
-          ? <TextField value={assignedTo} onChange={(event) => setAssignedTo(event.target.value)} />
-          : assignedTo
+          ? <TextField inputRef={iref} defaultValue={dbAssignedToValue}/>
+          : dbAssignedToValue
         }
       </StyledTableCell>
       <StyledTableCell>{status}</StyledTableCell>

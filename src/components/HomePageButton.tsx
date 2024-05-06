@@ -1,10 +1,10 @@
 'use client';
-import React from "react";
+import React, { useEffect } from "react";
 import { Badge, Button, styled } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function HomePageButton(
-  { label, onClick, numIndicators, marginTop }: { label: string, onClick?: string | (() => void), numIndicators?: number, marginTop?: string}
+  { label, onClick, indicatorGetter, marginTop }: { label: string, onClick?: string | (() => void), indicatorGetter?: () => Promise<number>, marginTop?: string}
 ): React.ReactElement {
   const router = useRouter()
 
@@ -23,6 +23,16 @@ export default function HomePageButton(
       backgroundColor: 'white',
     },
   });
+
+  const [numIndicators, setNumIndicators] = React.useState<number | undefined>(undefined)
+
+  useEffect(() => {
+    if (indicatorGetter) {
+      indicatorGetter().then(setNumIndicators)
+    }
+  }, [indicatorGetter])
+
+
 
   return (
     <Badge color="info" invisible={numIndicators === undefined}  badgeContent={numIndicators} sx={{ width: '90%', marginTop: marginTop }}>

@@ -38,8 +38,8 @@ export default function LoginContent({ login }: { login: (username: string, pass
 
       if (!username || !password) {
         setAlertInfo({ severity: "error", message: "Please fill in all fields" })
-      } else if (!emailRegex.test(username)) {
-        setAlertInfo({ severity: "error", message: "Invalid email address" })
+      //} else if (!emailRegex.test(username)) {
+        //setAlertInfo({ severity: "error", message: "Invalid email address" })
       } else {
         const nextPage = await login(username, password)
 

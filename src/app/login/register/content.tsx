@@ -39,8 +39,8 @@ export default function RegisterContent({register}: {register: (data: any) => Pr
       setAlertInfo({ severity: "error", message: "Please fill in all fields" })
     } else if (password1 !== password2) {
       setAlertInfo({ severity: "error", message: "Passwords do not match" })
-    } else if (!emailRegex.test(username)) {
-      setAlertInfo({ severity: "error", message: "Invalid email address" })
+    //} else if (!emailRegex.test(username)) {
+      //setAlertInfo({ severity: "error", message: "Invalid email address" })
     } else if (!strongPasswordRegex.test(password1)) {
       setAlertInfo({ severity: "error", message: "Password is too weak" })
     } else if (isFaculty && (facultyRole === '' || facultyDepartment === '')) {
@@ -50,8 +50,8 @@ export default function RegisterContent({register}: {register: (data: any) => Pr
         username: username,
         password: password1,
         is_faculty: isFaculty,
-        faculty_department: facultyDepartment,
-        faculty_role: facultyRole
+        faculty_department: getDepartments().findIndex(department => department === facultyDepartment),
+        faculty_role: roles().findIndex(role => role === facultyRole),
       }
       try{
       await register(data)
@@ -106,7 +106,7 @@ export default function RegisterContent({register}: {register: (data: any) => Pr
             </InputLabel>
             <Select
               labelId="department-label"
-              value={facultyDepartment}
+              value={facultyRole}
               onChange={(event) => setFacultyRole(event.target.value)}
             >
               {roles().map((department) => (

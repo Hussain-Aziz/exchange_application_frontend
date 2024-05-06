@@ -8,8 +8,15 @@ export function middleware(request: NextRequest) {
   const user = cookies().get('user')
 
   if (!user) {
-    url.pathname = '/login'
-    url.searchParams.set('next', request.nextUrl.pathname)
+    if (request.nextUrl.pathname !== '/login' && 
+        request.nextUrl.pathname !== '/login/' && 
+        request.nextUrl.pathname !== '/' && 
+        request.nextUrl.pathname !== '' &&
+        request.nextUrl.pathname !== '/login/register' &&
+        request.nextUrl.pathname !== '/login/register/' ) {
+      url.pathname = '/login'
+      url.searchParams.set('next', request.nextUrl.pathname)
+    }
     return NextResponse.redirect(url)
   }
 
