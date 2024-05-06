@@ -20,7 +20,7 @@ export default async function Page() {
   else if (!student.submitted_form) applicationState = "Adding Courses"
   else if (!student.ixo_details.advisor_approval || !student.ixo_details.associate_dean_approval || !student.ixo_details.ixo_approval) {
     applicationState = "Waiting for form approvals: "
-    extraInfo += "Advisor " + (!student.ixo_details.advisor_approval ? "(Not Approved), " : "(Approved), ")
+    extraInfo += "Academic Advisor " + (!student.ixo_details.advisor_approval ? "(Not Approved), " : "(Approved), ")
     extraInfo += "Associate Dean " + (!student.ixo_details.associate_dean_approval ? "(Not Approved), " : "(Approved), ")
     extraInfo += "IXO " + (!student.ixo_details.ixo_approval ? "(Not Approved)" : "(Approved)")
   }
