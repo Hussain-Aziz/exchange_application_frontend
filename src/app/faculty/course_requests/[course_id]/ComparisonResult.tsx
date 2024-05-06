@@ -11,9 +11,23 @@ export default function ComparisonResult({id, comparison_result, get_comparison_
 
     const [real_comparison_result, setComparisonResult] = useState<any>(comparison_result);
 
-    useEffect(() => {
-      get_comparison_result(id).then((result) => {setComparisonResult(result)})
-    }, [get_comparison_result, id]);
+  useEffect(() => {
+    const do_comparison = async () => {
+      let r = await get_comparison_result(id);
+      if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
+        r = await get_comparison_result(id);
+        if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
+          r = await get_comparison_result(id);
+          if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
+            console.log('Error getting comparison result');
+            return;
+          }
+        }
+        setComparisonResult(r[1]);
+      }
+      do_comparison();
+    }
+  }, [get_comparison_result, id]);
 
     if (real_comparison_result === null || real_comparison_result === undefined) {
       // return loading text

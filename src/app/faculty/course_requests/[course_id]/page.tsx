@@ -30,7 +30,7 @@ export default async function Page({params}: {params: {course_id: string}}) {
       headers: getHeaders(cookies())
     })
     const result = await response.json()
-    return result
+    return [response, result]
   }
 
   const response = await fetch(`${availableApprovalsEnpoint}?${search_params.toString()}`, {
