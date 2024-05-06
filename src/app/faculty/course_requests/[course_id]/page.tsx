@@ -26,11 +26,19 @@ export default async function Page({params}: {params: {course_id: string}}) {
 
   const get_comparison_result = async (id: number) => {
     "use server"
-    const response = await fetch(`${comparisonEndpoint}?id=${id}`, {
-      headers: getHeaders(cookies())
-    })
-    const result = await response.json()
-    return [response, result]
+    let r = await fetch(`${comparisonEndpoint}?id=${id}`, {headers: getHeaders(cookies())})
+    if (r.status === 500 || r.status === 404 || r.status === 400) {
+      r = await fetch(`${comparisonEndpoint}?id=${id}`, {headers: getHeaders(cookies())})
+      if (r.status === 500 || r.status === 404 || r.status === 400) {
+        r = await fetch(`${comparisonEndpoint}?id=${id}`, {headers: getHeaders(cookies())})
+        if (r.status === 500 || r.status === 404 || r.status === 400) {
+          console.log('Error getting comparison result');
+          return;
+        }
+      }
+    }
+    let res = await r.json();
+    return res
   }
 
   const response = await fetch(`${availableApprovalsEnpoint}?${search_params.toString()}`, {

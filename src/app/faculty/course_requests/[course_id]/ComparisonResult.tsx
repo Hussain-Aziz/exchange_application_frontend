@@ -14,19 +14,7 @@ export default function ComparisonResult({id, comparison_result, get_comparison_
   useEffect(() => {
     const do_comparison = async () => {
       let r = await get_comparison_result(id);
-      console.log(r[0].status);
-      console.log(JSON.stringify(r[1]));
-      if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
-        r = await get_comparison_result(id);
-        if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
-          r = await get_comparison_result(id);
-          if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
-            console.log('Error getting comparison result');
-            return;
-          }
-        }
-      }
-      setComparisonResult(r[1]);
+      setComparisonResult(r);
     }
     do_comparison();
   }, [get_comparison_result, id]);
@@ -50,7 +38,7 @@ export default function ComparisonResult({id, comparison_result, get_comparison_
   if (real_comparison_result['match percentage'] !== undefined) {
     match = Math.round(Number(String(real_comparison_result['match percentage']).replace('%', '')) * 100) / 100;
     
-    if (match > 80) color = 'green';
+    if (match >= 80) color = 'green';
     if (match < 60) color = 'orange';
   }
 
