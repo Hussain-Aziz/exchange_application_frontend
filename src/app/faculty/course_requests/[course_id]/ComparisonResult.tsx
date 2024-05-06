@@ -14,6 +14,8 @@ export default function ComparisonResult({id, comparison_result, get_comparison_
   useEffect(() => {
     const do_comparison = async () => {
       let r = await get_comparison_result(id);
+      console.log(r[0].status);
+      console.log(JSON.stringify(r[1]));
       if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
         r = await get_comparison_result(id);
         if (r[0].status === 500 || r[0].status === 404 || r[0].status === 400) {
@@ -23,10 +25,10 @@ export default function ComparisonResult({id, comparison_result, get_comparison_
             return;
           }
         }
-        setComparisonResult(r[1]);
       }
-      do_comparison();
+      setComparisonResult(r[1]);
     }
+    do_comparison();
   }, [get_comparison_result, id]);
 
     if (real_comparison_result === null || real_comparison_result === undefined) {
