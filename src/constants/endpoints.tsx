@@ -1,6 +1,6 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 
-export const baseEndpoint = "http://127.0.0.1:8000/"
+export const baseEndpoint = process.env.ENDPOINT ?? "http://127.0.0.1:8000/"
 export const loginEndpoint = baseEndpoint + 'login/'
 export const registerEndpoint = baseEndpoint + 'register/'
 export const applicationInfoEndpoint = baseEndpoint + 'student/application_info/'
